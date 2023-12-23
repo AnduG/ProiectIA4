@@ -1,0 +1,6 @@
+From project root execute the following command to activate the environment:  .\.venv\Scripts\activate.bat
+After env activation, install flask with the following command (only the first time): pip install Flask
+
+To run the application, execute the following command: python -m flask --app hello run
+To make it visible to others in the same network, add --host=0.0.0.0
+To run it in debug mode, add --debug
