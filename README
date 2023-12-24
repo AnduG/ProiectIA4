@@ -1,10 +1,12 @@
 From project root execute the following command to activate the environment:  ``.\.venv\Scripts\activate.bat`
 After env activation, install flask with the following command (only the first time): 
-`pip install Flask Flask-SQLAlchemy mysqlclient`
+`pip3 install Flask Flask-SQLAlchemy mysqlclient flask-login`
 
 To run the application, execute the following command: `python -m flask --app app run`
 To make it visible to others in the same network, add `--host=0.0.0.0`
 To run it in debug mode, add `--debug`
+
+Alternatively, implementation now supports running directly from VSCode
 
 run `flask shell` to access project shell
 
