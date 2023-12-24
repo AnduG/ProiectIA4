@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - FlaskApp</title>
+    <style>
+        .title {
+            margin: 5px;
+        }
+
+        .content {
+            margin: 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .bio {
+            padding: 10px;
+            margin: 5px;
+            background-color: #ffffff;
+            color: #004835;
+        }
+
+        .name a {
+            color: #00a36f;
+            text-decoration: none;
+        }
+
+        logbar a {
+            color: #2150eb;
+            font-size: 5vh;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+
+        .abouttext {
+            margin: 5px;
+            padding: 10px;
+            width: 60%;
+            text-align: left;
+            background-color: beige;
+        }
+    </style>
+</head>
+<body>
+    <logbar>
+        <a href="#">Login</a>
+        <a href="#">Sign up</a>
+    </logbar>
+    <hr>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

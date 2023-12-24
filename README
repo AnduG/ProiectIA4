@@ -1,6 +1,16 @@
-From project root execute the following command to activate the environment:  .\.venv\Scripts\activate.bat
-After env activation, install flask with the following command (only the first time): pip install Flask
+From project root execute the following command to activate the environment:  ``.\.venv\Scripts\activate.bat`
+After env activation, install flask with the following command (only the first time): 
+`pip install Flask Flask-SQLAlchemy mysqlclient`
 
-To run the application, execute the following command: python -m flask --app hello run
-To make it visible to others in the same network, add --host=0.0.0.0
-To run it in debug mode, add --debug
+To run the application, execute the following command: `python -m flask --app app run`
+To make it visible to others in the same network, add `--host=0.0.0.0`
+To run it in debug mode, add `--debug`
+
+run `flask shell` to access project shell
+
+
+Relevant Links:
+
+DB conf: https://www.digitalocean.com/community/tutorials/how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application
+Flask tutorial: https://flask.palletsprojects.com/en/3.0.x/quickstart/
+Flask installation guide: https://flask.palletsprojects.com/en/3.0.x/installation/
