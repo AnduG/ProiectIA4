@@ -1,4 +1,4 @@
-From project root execute the following command to activate the environment:  ``.\.venv\Scripts\activate.bat`
+From project root execute the following command to activate the environment:  `.\.venv\Scripts\activate.bat`
 After env activation, install flask with the following command (only the first time): 
 `pip3 install Flask Flask-SQLAlchemy mysqlclient flask-login`
 
