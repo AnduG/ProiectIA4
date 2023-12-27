@@ -46,19 +46,14 @@
         }
 
         .abouttext {
-            margin: 5px;
+            margin: 20px;
             padding: 10px;
-            width: 60%;
+            width: 100%;
             text-align: left;
-            background-color: beige;
         }
     </style>
 </head>
 <body>
-    <logbar>
-        <a href="#">Login</a>
-        <a href="#">Sign up</a>
-    </logbar>
     <hr>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

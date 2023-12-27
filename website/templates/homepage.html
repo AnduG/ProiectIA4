@@ -1,16 +1,92 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="title">{% block title %} About us! {% endblock %}</h1>
-    <div class="abouttext">
-        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut pharetra nisl. Praesent malesuada sit amet magna ornare mollis. Praesent mauris neque, iaculis eu blandit tempus, pharetra eu turpis. Etiam velit magna, semper eu tincidunt non, tempor ac elit. Curabitur odio arcu, ullamcorper eu risus sit amet, volutpat condimentum odio. Aliquam dictum turpis a faucibus pharetra. Cras lacus nibh, vulputate sed consequat sit amet, blandit eu mi. Quisque dapibus luctus lacus, at ullamcorper sem dictum quis. Phasellus in ipsum mattis, bibendum tellus id, tristique orci. Pellentesque neque sem, efficitur in magna a, lobortis ullamcorper sem.
+    <style>
+        body {
+            background-color: teal;
+        }
 
-            Phasellus leo urna, placerat ut bibendum id, ullamcorper sed dolor. Curabitur tristique elit lorem, sit amet egestas quam malesuada id. Nullam iaculis leo a nunc euismod laoreet. Morbi venenatis neque sed est mattis congue ut id diam. Cras mollis mauris nisi, in pellentesque justo varius in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc imperdiet, felis ut condimentum laoreet, mauris ligula cursus tellus, sed semper dolor ex eu est. Donec egestas turpis finibus lectus iaculis, ornare viverra elit facilisis. Aenean cursus feugiat dui, a rutrum tortor tempus sed. Mauris ornare dignissim lectus id accumsan. Nullam et posuere metus. Nulla quis quam in massa bibendum tincidunt. Sed sed vulputate justo, vitae viverra arcu.
-            
-            Cras sit amet consectetur felis. Suspendisse semper ullamcorper sapien id fringilla. Nulla vitae felis vel risus tempor sodales. Phasellus id purus sed ipsum lacinia dictum eu vel felis. Mauris purus risus, aliquet ut elementum in, vehicula id nibh. Aliquam erat volutpat. Ut ac sagittis turpis. Etiam auctor nunc aliquam odio consequat aliquet. Mauris laoreet ligula in varius cursus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque consequat, nisi quis commodo ornare, dolor libero tempus est, eu congue massa augue vitae quam. Maecenas rutrum quam venenatis elementum tempus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-            
-            Proin ullamcorper ac quam et venenatis. Aliquam vel turpis id nibh ullamcorper mollis vel sed enim. Cras rutrum sollicitudin dignissim. Nulla ut commodo ante. Maecenas vestibulum leo vitae tortor elementum, vel gravida libero sollicitudin. Maecenas nec pharetra ex. Nulla facilisis facilisis lacus, non porttitor mi. Suspendisse suscipit et est a dignissim.
-            
-            Vestibulum orci arcu, auctor id nulla vitae, viverra volutpat risus. Suspendisse turpis enim, maximus et purus eu, pellentesque convallis arcu. Nulla sed ultricies justo, in sodales ipsum. Proin pulvinar enim ut lacus cursus, sit amet iaculis tellus faucibus. Nullam suscipit massa eu lacus accumsan, fermentum tincidunt odio tristique. Nullam vel diam ut enim finibus blandit a sed elit. Morbi porttitor mattis nunc at semper. Duis ullamcorper tincidunt massa, eu lobortis augue interdum at. </p>
+        .title {
+            width: 100%;
+            padding-top: 50px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: coral;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .abouttext {
+            padding: 25px;
+            justify-content: center;
+            text-align: justify;
+            color: coral;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: x-large;
+        }
+
+        .abouttext img {
+            display: block;
+            margin: 30px auto;
+            border-radius: 10px;
+            max-width: 100%;
+        }
+
+        .button-line {
+            background-color: coral;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+        }
+
+        logbar a, userbar a, playbutton a {
+            color: rgb(144, 45, 9);
+            font-size: 3.5vh;
+            margin-left: 30px;
+            text-decoration: none;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        userbar a {
+            margin-left: 950px;
+        }
+        
+        playbutton a {
+            display: inline-block;
+            margin-left: 600px;
+            text-align: center;
+            border-radius: 20px;
+            background-color: coral;
+            padding: 10px 20px;
+            font-size: 4vh;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+    </style>
+    
+    <div class="button-line">
+        <logbar>
+            <a href="#">Login</a>
+            <a href="/auth/sign-up">Sign up</a>
+        </logbar>
+        <userbar>
+            <a href="#">Profile</a>
+        </userbar>
+    </div>
+
+    <h1 class="title">{% block title %} Welcome to Human Benchmark! {% endblock %}</h1>
+    <div class="abouttext">
+        <p> Human Benchmark is a platform that offers a collection of simple, interactive games designed to measure your cognitive and physical abilities. Each activity allows individuals to test different skills, such as memory, reaction time, coordination, perception. </p>
+
+        <img src="https://pbs-prod.linustechtips.com/monthly_2016_02/56b816799bf53_ScreenShot2016-02-07at11.15.13PM.png.c6d1e59bdd170646e3469d7b041af867.png">
+
+        <p> Play now and compete against hundreds of other players around the world. Improve your dexterity while reaching the top of the global leaderboards! </p>
+
+        <playbutton>
+            <a href="#">Play!</a>
+        </playbutton>
+
     </div>
 {% endblock %}
