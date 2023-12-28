@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        body {
+            background-color: teal;
+        }
+
+        .title {
+            width: 100%;
+            padding-top: 50px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: coral;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .button-line {
+            background-color: coral;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+        }
+
+        logbar a, userbar a {
+            color: rgb(144, 45, 9);
+            font-size: 3.5vh;
+            margin-left: 30px;
+            text-decoration: none;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        userbar a {
+            margin-left: 950px;
+        }
+
+        .abouttext {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: justify;
+            color: coral;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: x-large;
+        }
+
+        .game-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: auto;
+        }
+
+        .game-box-content {
+            color: coral;
+            font-weight: bold;
+            font-style: oblique;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .game-box img {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid black;
+        }
+
+    </style>
+
+    <div class="button-line">
+        <logbar>
+            <a href="#">Login</a>
+            <a href="/auth/sign-up">Sign up</a>
+        </logbar>
+        <userbar>
+            <a href="#">Profile</a>
+        </userbar>
+    </div>
+    
+    <h1 class="title">
+        {% block title %} Game Page! {% endblock %}
+    </h1>
+    <div class="abouttext">
+        <p>Click one of the games below in order to play and compete against other players!</p>
+    </div>
+    <div class="game-boxes">
+        <!-- Game Box 1 -->
+        <a href="/games/reactionTime"> <!-- game1 will be changed to the name of the game-->
+            <div class="game-box-content">
+                <div class="game-box img">
+                    <img src="https://www.wallpaperflare.com/static/457/577/123/lightning-blue-dark-black-wallpaper.jpg" 
+                        alt="Lightning">
+                </div>
+                <p>REACTION TIME</p>
+            </div>
+        </a>
+        
+        <!-- Game Box 2 -->
+        <a href="/games/game2">
+            <div class="game-box-content">
+                <div class="game-box img">
+                    <img src="" alt="Game 2 Icon">
+                </div>
+                <p>Game 2</p>
+            </div>
+        </a>
+
+        <!-- Game Box 3 -->
+        <a href="/games/game3">
+            <div class="game-box-content">
+                <div class="game-box img">
+                    <img src="" alt="Game 3 Icon">
+                </div>
+                <p>Game 3</p>
+            </div>
+        </a>
+
+        <!-- Game Box 4 -->
+        <a href="/games/game4">
+            <div class="game-box-content">
+                <div class="game-box img">
+                    <img src="" alt="Game 4 Icon">
+                </div>
+                <p>Game 4</p>
+            </div>
+        </a>
+
+        <!-- Game Box 5 -->
+        <a href="/games/game5">
+            <div class="game-box-content">
+                <div class="game-box img">
+                    <img src="" alt="Game 5 Icon">
+                </div>
+                <p>Game 5</p>
+            </div>
+        </a>
+
+        <!-- Game Box 6 -->
+        <a href="/games/game6">
+            <div class="game-box-content">
+                <div class="game-box img">
+                    <img src="" alt="Game 6 Icon">
+                </div>
+                <p>Game 6</p>
+            </div>
+        </a>
+
+    </div>
+{% endblock %}
