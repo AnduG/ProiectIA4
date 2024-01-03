@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+import random
 
 views = Blueprint('views', __name__)
 
@@ -15,8 +16,8 @@ def games():
 def reactionTime():
     return
 
-@views.route('/games/game2')
-def game2():
+@views.route('/games/sequenceMemory')
+def sequenceMemory():
     return
 
 @views.route('/games/game3')
