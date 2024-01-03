@@ -24,9 +24,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
-        # TODO: Uncomment this and delete next line
-        #if user and hash_string(password) == user.hashed_password:
-        if user and password == user.hashed_password:
+        if user and hash_string(password) == user.hashed_password:
             # Login successful
             login_user(user)
             flash('Login successful!', category='success')
