@@ -1,15 +1,45 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import login_user, logout_user, login_required, current_user
 from website.string_support import *
 from website.models import User
-from . import db
+from . import db, login_manager
+
 auth = Blueprint('auth', __name__)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        login_data = request.form
+        for field, value in login_data.items():
+            if not value:
+                flash('Please fill all fields before submitting.', category='err')
+                return render_template('login.html')
+
+        email = login_data.get('email')
+        password = login_data.get('password')
+
+        user = User.query.filter_by(email=email).first()
+
+        # TODO: Uncomment this and delete next line
+        #if user and hash_string(password) == user.hashed_password:
+        if user and password == user.hashed_password:
+            # Login successful
+            login_user(user)
+            flash('Login successful!', category='success')
+            return redirect(url_for('views.homepage'))
+        else:
+            # Login failed
+            flash('Invalid email or password. Please try again.', category='err')
+
     return render_template('login.html')
 
 @auth.route('/logout')
 def logout():
+    logout_user()
     return render_template('logout.html')
 
 @auth.route('/sign-up', methods=['GET','POST'])
