@@ -30,8 +30,8 @@ def displayPattern():
     return render_template("sequence-run-game.html")
 
 @views.route('/games/wordGeneration')
-def game3():
-    return
+def wordGeneration():
+    return render_template('wordGeneration.html')
 
 @views.route('/games/game4')
 def game4():
