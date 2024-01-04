@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+
+<head>
+  <style>
+    body {
+        background-color: lightskyblue;
+    }
+
+    .container {
+        margin-left: 26vw;
+        margin-top: 2.5vw;
+    }
+
+    .square {
+        background-color: lightblue;
+        height: 200px;
+        width: 200px;
+        text-align: center;
+        margin: 10px;
+    }
+
+    .btn-primary:hover {
+        background-color: rgb(44, 156, 145);
+    }
+
+    .btn-primary:focus {
+        background-color: rgb(99, 149, 243);
+        transition: background-color 0.1s;
+    }
+
+    .btn-secondary {
+        background-color: lightskyblue;
+        border-color: rgb;
+        display: inline;
+        margin-bottom: 0.5vw;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transition: all 0.3 ease-in-out;
+        background-color: lightskyblue;
+    }
+
+    .modal-content {
+        background-color: rgb(99, 149, 243);
+        align-items: center;
+        margin: 15% auto;
+        padding: 2vw;
+        border: 1px solid rgb(0,0,0);
+        width: 50%;
+        color: rgb(255, 255, 255);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: x-large;
+    }
+
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <button id="1" class="square btn btn-primary"></button>
+            <button id="2" class="square btn btn-primary"></button>
+            <button id="3" class="square btn btn-primary"></button>
+        </div>
+
+        <div class="row">
+            <button id="4" class="square btn btn-primary"></button>
+            <button id="5" class="square btn btn-primary"></button>
+            <button id="6" class="square btn btn-primary"></button>
+        </div>
+
+        <div class="row">
+            <button id="7" class="square btn btn-primary"></button>
+            <button id="8" class="square btn btn-primary"></button>
+            <button id="9" class="square btn btn-primary"></button>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <!-- SHOW THE FINAL SCORE -->
+            <a class="btn btn-secondary" href="/games/sequenceMemoryRunGame">Retry</a>
+            <a class="btn btn-secondary" href="/games">Return to main menu</a>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    //  This is the animation for displaying the pattern
+    function lightUpButtons(pattern) {
+        let delay = 800;
+
+        pattern.forEach((value, index) => {
+            //  Flash the button
+            //  First button flashes instantly, second button after 600ms * 1 etc
+            //  This way, each button will flash by themselves 
+            setTimeout(() => {
+                let button = document.getElementById(value.toString());
+                button.classList.add('active');
+5
+                //  Unflash the button
+                //  Last button flash happens right before the next button's flash
+                setTimeout(() => {
+                    button.classList.remove('active');
+                }, delay - 100);
+            }, delay * index);
+        });
+    }
+
+    //  This is the main function
+    window.onload = function () {
+        //  REQUIRED VARIABLES
+
+        let pattern = [];       //  The increasing pattern
+        let userPattern = [];   //  User clicks
+        let new_square = 0;     //  New random block on the grid
+        let round = 1;          //  Current round
+        let is_equal = true;    //  The game ends after one mistake
+        let clicks = 0;         //  Number of clicks per round
+        var handlers = [];      //  Function addresses of each button
+
+        //  REQUIRED FUNCTIONS
+
+        function insertPopUp() {
+            let modal = document.getElementById('gameOverModal');
+            let modalContent = document.querySelector('.modal-content');
+    
+            modalContent.innerHTML = `
+                <p>Game Over</p>
+                <p>Final Score: ${round - 1}</p>
+                <a class="btn btn-secondary" href="/games/displayPattern">Retry</a>
+                <a class="btn btn-secondary" href="/games">Return to main menu</a>
+            `;
+
+            modal.style.display = "block";
+        }
+
+        function checkAvailabilityForNextRound() {
+            if (is_equal) {
+                round++;
+                startRound();
+            } else {
+                removeListeners();
+                insertPopUp();
+            }
+        }
+
+        //  This function represents what happens after a button is pressed
+        function buttonAction(button) {
+            let clicked_number = parseInt(button.id);
+            userPattern.push(clicked_number);
+
+            clicks++;
+            
+            if (pattern[clicks - 1] != userPattern[clicks - 1]) {
+                is_equal = false;
+            }
+
+            if (clicks == round || is_equal == false) {
+                //  User can't click more than required
+                removeListeners();
+                checkAvailabilityForNextRound();
+            }
+        }
+
+        //  This function adds the event listeners for the 9 buttons
+        function addListeners() {
+            let index = 0;
+
+            document.querySelectorAll('.square').forEach(button => {
+                handlers[index] = () => buttonAction(button);
+                button.addEventListener('click', handlers[index]);
+
+                index++;
+            });
+        }
+
+        //  This function removes the event listeners for the 9 buttons
+        function removeListeners() {
+            let index = 0;
+
+            document.querySelectorAll('.square').forEach(button => {
+                button.removeEventListener('click', handlers[index]);
+
+                index++;
+            });
+        }
+
+        //  This function prepares the enviroment for a new round
+        function startRound() {
+            //  Reset variables
+            clicks = 0;
+            userPattern = [];
+
+            //  Add a new element to the pattern
+            new_square = Math.floor(Math.random() * 9) + 1;
+            pattern.push(new_square);
+
+            //  Display pattern
+            lightUpButtons(pattern);
+
+            //  Make buttons interactive
+            addListeners();
+        }
+
+        startRound();
+    };
+</script>
+{% endblock %}
