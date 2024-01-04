@@ -25,7 +25,7 @@ def reactionTime():
 def sequenceMemory():
     return
 
-@views.route('/games/game3')
+@views.route('/games/wordGeneration')
 def game3():
     return
 
