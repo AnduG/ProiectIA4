@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, jsonify
 import random
 
 views = Blueprint('views', __name__)
@@ -16,9 +16,13 @@ def games():
 def reactionTime():
     return
 
-@views.route('/games/sequenceMemory')
+@views.route('/games/sequenceMemory', methods=['GET', 'POST'])
 def sequenceMemory():
-    return
+    return render_template("sequence-startscreen.html")
+
+@views.route('/games/sequenceMemoryRunGame')
+def displayPattern():
+    return render_template("sequence-run-game.html")
 
 @views.route('/games/game3')
 def game3():
