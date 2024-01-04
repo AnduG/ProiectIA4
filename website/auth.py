@@ -88,6 +88,6 @@ def sign_up():
                             age=age, first_name=first_name, last_name=last_name)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for('views.homepage'))
+            return redirect(url_for('auth.login'))
 
     return render_template('sign-up.html')

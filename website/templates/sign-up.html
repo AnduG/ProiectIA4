@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+<h1 class="title">{% block title %} Sign Up! {% endblock %}</h1>
 {% block content %}
 <form method="POST">
-    <h3 align="center">Sign Up</h3>
+    <div class="centering_container">
+        <h3 align="center">Sign Up</h3>
+    </div>
+    <div class="centering_container">
     
     <div class="row">
         <div class="col-md-6">
@@ -39,7 +43,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password_confirm">Password Confirmation</label>
+                <label for="password_confirm">Password Confirm</label>
                 <input
                     type="password"
                     class="form-control"
@@ -84,8 +88,9 @@
                 />
             </div>
 
-            <button type="submit" class="btn btn-primary" style="margin-top: 16%; margin-left: 30%;">Submit</button>
+            <button type="submit" class="btn coral_btn" style="margin-top: 20%; margin-left: 30%;">Submit</button>
         </div>
     </div>
+    </div>  
 </form>
 {% endblock %}

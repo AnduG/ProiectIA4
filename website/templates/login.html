@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
+<h1 class="title">{% block title %} Login! {% endblock %}</h1>
 {% block content %}
 <form method="POST">
-    <h3 align="center">Login</h3>
+    <div class="centering_container">
+        <h3 align="center">Login</h3>
+    </div>
+    <div class="centering_container">
     
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input
@@ -15,7 +19,7 @@
                     placeholder="Enter email"
                 />
             </div>
-
+            
             <div class="form-group">
                 <label for="password">Password</label>
                 <input
@@ -27,8 +31,9 @@
                 />
             </div>
 
-            <button type="submit" class="btn btn-primary" style="margin-top: 16%; margin-left: 30%;">Login</button>
+            <button type="submit" class="btn coral_btn" style="margin-top: 20%; margin-left: 30%;">Submit</button>
         </div>
     </div>
+    </div>  
 </form>
 {% endblock %}

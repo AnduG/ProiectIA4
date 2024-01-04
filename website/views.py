@@ -1,11 +1,16 @@
 from flask import Blueprint, render_template
+from flask_login import current_user
 import random
 
 views = Blueprint('views', __name__)
 
 @views.route('/')
 def homepage():
-    return render_template('homepage.html')
+    if current_user.is_authenticated:
+        return render_template('user-homepage.html')
+    else:
+        return render_template('homepage.html')
+        
 
 @views.route('/games')
 def games():

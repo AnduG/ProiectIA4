@@ -2,59 +2,16 @@
 
 {% block content %}
     <style>
-        body {
-            background-color: teal;
-        }
-
-        .title {
-            width: 100%;
-            padding-top: 50px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            color: coral;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-
-        .abouttext {
-            padding: 25px;
-            justify-content: center;
-            text-align: justify;
-            color: coral;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: x-large;
-        }
-
-        .abouttext img {
-            display: block;
-            margin: 30px auto;
-            border-radius: 10px;
-            max-width: 100%;
-        }
-
-        .button-line {
-            background-color: coral;
-            width: 100%;
-            display: flex;
-            padding: 5px;
-        }
 
         userbar a, play_button a {
             color: rgb(144, 45, 9);
-            font-size: 3.5vh;
-            margin-left: 30px;
+            font-size: 4vh;
+            margin: 5vh;
             text-decoration: none;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
-
-        userbar a {
-            margin-left: 950px;
-        }
         
         play_button a {
-            display: inline-block;
-            margin-left: 600px;
             text-align: center;
             border-radius: 20px;
             background-color: coral;
@@ -66,7 +23,7 @@
     </style>
     
     <!-- Upper line containing user buttons -->
-    <div class="button-line">
+    <div class="button-line-right">
         <userbar>
             <a href="#">Profile</a>
         </userbar>
@@ -81,9 +38,11 @@
 
         <p> Play now and compete against hundreds of other players around the world. Improve your dexterity while reaching the top of the global leaderboards! </p>
 
+        <div class="centering_container">
         <play_button>
             <a href="/games">Play!</a>
         </play_button>
+        </div>
 
     </div>
 {% endblock %}
