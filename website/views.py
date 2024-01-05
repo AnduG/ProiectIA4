@@ -33,9 +33,9 @@ def displayPattern():
 def wordGeneration():
     return render_template('wordGeneration.html')
 
-@views.route('/games/game4')
-def game4():
-    return
+@views.route('/games/matchingColors')
+def matchingColors():
+    return render_template('matchingColors.html')
 
 @views.route('/games/game5')
 def game5():
