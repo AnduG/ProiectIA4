@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .title {
+        font-weight: bold;
+    }
+
+    #wordDisplay {
+        position: sticky;
+        left: 50%;
+        transform: translateX(-50%); /* centering based on the length of the word */
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+        animation: fadeInOut 0.5s forwards;
+    }
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 8px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: coral;
+    }
+
+    #score, #lives {
+        margin-top: 20px;
+        font-size: 24px;
+        color: coral;
+        margin-top: 10px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid grey;
+        width: 30%;
+        text-align: center;
+        border-radius: 8px;
+    }
+
+    .modal-button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .modal-button:hover {
+        background-color: coral;
+    }
+</style>
+
+<h1 class="title">
+    {% block title %} Word Generation Game {% endblock %}
+</h1>
+
+<div class = "abouttext">
+    <p>You will be shown words, one at a time. Click "NEW" if the word was not generated before, or "SEEN" if it was.</p>
+</div>
+
+<div class="container">
+    <div id="wordDisplay">Loading...</div>
+
+    <div>
+        <button onclick="checkWord('new')">NEW</button>
+        <button onclick="checkWord('old')">SEEN</button>
+    </div>
+
+    <div id="score">Score: 0</div>
+    <div id="lives">Lives: 3</div>
+</div>
+
+<div class="modal" id="gameOverModal">
+    <div class="modal-content">
+        <p>Game Over!</p>
+        <button class="modal-button" onclick="playAgain()">Play Again</button>
+        <button class="modal-button" onclick="returnToMainPage()">Return to Game Page</button>
+        <h3>Score: <span id="scoreDisplay"></span></h3>
+    </div>
+</div>
+
+<script>
+    // The list of words
+    const words = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig',
+                   'epoxy', 'laptop', 'war', 'sticky', 'beef', 'answer',
+                   'blue', 'ocean', 'sea', 'river', 'python', 'kernel',
+                   'process', 'thread', 'wireless', 'singer', 'music', 'lie',
+                   'beyonce', 'doctor', 'card', 'book', 'shelf', 'chef',
+                   'kitchen', 'computer', 'college', 'student', 'dance',
+                   'shoe', 'fruit', 'tree', 'globe', 'pattern', 'language',
+                   'scheme', 'stairs', 'word', 'fly', 'truck', 'spark', 'car',
+                   'driver', 'license', 'fun', 'ski', 'snow', 'summer', 'lay',
+                   'beach', 'sand', 'police', 'street', 'avenue', 'highway',
+                   'plane', 'wing', 'waterfall', 'paint', 'brush', 'opacity',
+                   'mirror', 'carpet', 'water', 'money', 'wallet', 'dollar',
+                   'note', 'game', 'games', 'king', 'desire', 'queen', 'crown',
+                   'haunted', 'formation', 'single', 'lady', 'telephone',
+                   'videophone', 'heated', 'renaissance', 'girl', 'move',
+                   'deluxe', 'album', 'grande', 'venti'];
+
+    let score = 0;
+    let lives = 3;
+    let lastWord = [];
+
+    function displayWord() {
+        if (lives > 0) {
+            const random = Math.floor(Math.random() * words.length);
+            const wordElement = document.getElementById('wordDisplay');
+
+            wordElement.style.animation = 'none'; // resets the animation
+            void wordElement.offsetWidth;
+            wordElement.textContent = words[random];
+            wordElement.style.animation = 'fadeInOut 0.5s forwards'; // animation
+        } else {
+            // THIS IS WHERE "score" CONTAINS THE FINAL "score"
+            // WHICH SHOULD BE REGISTERED IN THE DATABASE
+            var scoreDisplay = document.getElementById("scoreDisplay");
+            scoreDisplay.textContent = score;
+            document.getElementById('gameOverModal').style.display = 'block';
+        }
+    }
+
+    function playAgain() {
+        // Resets the statistics in case the user wants to play again
+        score = 0;
+        lives = 3;
+        mentioned.length = 0;
+        window.location.href = '/games/wordGeneration';
+        displayWord();
+    }
+
+    function returnToMainPage() {
+        // Redirect to game page
+        window.location.href = '/games';
+    }
+
+    const mentioned = [];
+
+    function checkWord(choice) {
+        const crtWord = document.getElementById('wordDisplay').textContent;
+        if (choice === 'new') {
+            if (!mentioned.includes(crtWord)) {
+                mentioned.push(crtWord);
+                if (lives != 0) {
+                    score++;
+                }
+            } else {
+                if (lives != 0) {
+                    lives--;
+                }
+            }
+        } else if (choice === 'old') {
+            if (!mentioned.includes(crtWord)) {
+                if (lives != 0) {
+                    lives--;
+                }
+            } else {
+                if (lives != 0) {
+                    score++;
+                }
+            }
+        }
+        document.getElementById('score').textContent = 'Score: ' + score;
+        document.getElementById('lives').textContent = 'Lives: ' + lives;
+        displayWord();
+    }
+
+    displayWord();
+
+</script>
+
+{% endblock %}

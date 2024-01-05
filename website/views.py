@@ -21,17 +21,25 @@ def games():
 def reactionTime():
     return
 
-@views.route('/games/sequenceMemory')
+@views.route('/games/sequenceMemory', methods=['GET', 'POST'])
 def sequenceMemory():
-    return
+    return render_template("sequence-startscreen.html")
 
-@views.route('/games/game3')
-def game3():
-    return
+@views.route('/games/sequenceMemoryRunGame')
+def displayPattern():
+    return render_template("sequence-run-game.html")
 
-@views.route('/games/game4')
-def game4():
-    return
+@views.route('/games/wordGeneration')
+def wordGeneration():
+    return render_template('wordGeneration.html')
+
+@views.route('/games/matchingColors')
+def matchingColors():
+    return render_template('matchingColors-startscreen.html')
+
+@views.route('/games/matchingColorsRunGame')
+def displayGrid():
+    return render_template("matchingColors-run-game.html")
 
 @views.route('/games/game5')
 def game5():
