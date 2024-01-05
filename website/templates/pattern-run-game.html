@@ -1,0 +1,568 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+
+<head>
+  <style>
+    body {
+        background-color: lightskyblue;
+    }
+
+    .btn-primary {
+        box-shadow: 0.05vw 0.05vw 0.8vw rgba(0, 0, 0, 0.5);
+    }
+
+    .container1 .btn-primary{
+        height: 10vw;
+        width: 10vw;
+    }
+
+    .container1 .modal{
+        left: 31vw;
+        top: 8vw;
+    }
+
+    .container2 .btn-primary{
+        height: 8vw;
+        width: 8vw;
+    }
+
+    .container2 .modal{
+        left: 29vw;
+        top: 6vw;
+    }
+
+    .container3 .btn-primary{
+        height: 6vw;
+        width: 6vw;
+    }
+
+    .container3 .modal{
+        left: 28.5vw;
+        top: 6.6vw;
+    }
+
+    .container4 .btn-primary{
+        height: 5.2vw;
+        width: 5.2vw;
+    }
+
+    .container4 .modal{
+        left: 27.3vw;
+        top: 5.2vw;
+    }
+
+    .square {
+        background-color: lightblue;
+        margin: 1.1vw;
+    }
+
+    .btn-primary:hover {
+        background-color: rgb(114, 180, 201);
+    }
+
+    .btn-primary:focus {
+        background-color: lightblue;
+        transition: background-color 0.1s;
+    }
+
+    .btn-secondary {
+        background-color: lightskyblue;
+        border-color: rgb;
+        display: inline;
+        margin-bottom: 0.5vw;
+        font-size: 1.8vw;
+    }
+
+    .warning {
+        display: none;
+        color: red;
+        margin-top: 1.5vw;
+        margin-right: 4vw;
+        font-size: 2.5vw;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-shadow: 0.5vw 0.5vw 0.4vw rgba(0, 0, 0, 0.5);
+    }
+
+    .lives {
+        display: block;
+        color: blue;
+        margin-top: 1.5vw;
+        margin-right: 4vw;
+        font-size: 2.5vw;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-shadow: 0.5vw 0.5vw 0.4vw rgba(0, 0, 0, 0.5);
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        transition: all 0.3 ease-in-out;
+        background-color: lightskyblue;
+    }
+
+    .modal-content {
+        background-color: rgb(99, 149, 243);
+        align-items: center;
+        margin: 15% auto;
+        padding: 2vw;
+        border: 1px solid rgb(0,0,0);
+        width: 50%;
+        color: rgb(255, 255, 255);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: x-large;
+    }
+
+  </style>
+</head>
+
+<body>
+    <div id="warning" class="warning">
+        <p>WRONG!</p>
+    </div>
+
+    <div id="lives" class="lives">
+        <p>Lives left: <span id="livesCount"></span></p>
+    </div>
+
+    <div class="container1">
+        <div id="3x3grid" class="modal">
+            <div class="row">
+                <button id="1.1" class="square btn btn-primary"></button>
+                <button id="1.2" class="square btn btn-primary"></button>
+                <button id="1.3" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="1.4" class="square btn btn-primary"></button>
+                <button id="1.5" class="square btn btn-primary"></button>
+                <button id="1.6" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="1.7" class="square btn btn-primary"></button>
+                <button id="1.8" class="square btn btn-primary"></button>
+                <button id="1.9" class="square btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container2">
+        <div id="4x4grid" class="modal">
+            <div class="row">
+                <button id="2.1" class="square btn btn-primary"></button>
+                <button id="2.2" class="square btn btn-primary"></button>
+                <button id="2.3" class="square btn btn-primary"></button>
+                <button id="2.4" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="2.5" class="square btn btn-primary"></button>
+                <button id="2.6" class="square btn btn-primary"></button>
+                <button id="2.7" class="square btn btn-primary"></button>
+                <button id="2.8" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="2.9" class="square btn btn-primary"></button>
+                <button id="2.10" class="square btn btn-primary"></button>
+                <button id="2.11" class="square btn btn-primary"></button>
+                <button id="2.12" class="square btn btn-primary"></button>
+            </div>
+
+            <div class="row">
+                <button id="2.13" class="square btn btn-primary"></button>
+                <button id="2.14" class="square btn btn-primary"></button>
+                <button id="2.15" class="square btn btn-primary"></button>
+                <button id="2.16" class="square btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container3">
+        <div id="5x5grid" class="modal">
+            <div class="row">
+                <button id="3.1" class="square btn btn-primary"></button>
+                <button id="3.2" class="square btn btn-primary"></button>
+                <button id="3.3" class="square btn btn-primary"></button>
+                <button id="3.4" class="square btn btn-primary"></button>
+                <button id="3.5" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="3.6" class="square btn btn-primary"></button>
+                <button id="3.7" class="square btn btn-primary"></button>
+                <button id="3.8" class="square btn btn-primary"></button>
+                <button id="3.9" class="square btn btn-primary"></button>
+                <button id="3.10" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="3.11" class="square btn btn-primary"></button>
+                <button id="3.12" class="square btn btn-primary"></button>
+                <button id="3.13" class="square btn btn-primary"></button>
+                <button id="3.14" class="square btn btn-primary"></button>
+                <button id="3.15" class="square btn btn-primary"></button>
+            </div>
+
+            <div class="row">
+                <button id="3.16" class="square btn btn-primary"></button>
+                <button id="3.17" class="square btn btn-primary"></button>
+                <button id="3.18" class="square btn btn-primary"></button>
+                <button id="3.19" class="square btn btn-primary"></button>
+                <button id="3.20" class="square btn btn-primary"></button>
+            </div>
+
+            <div class="row">
+                <button id="3.21" class="square btn btn-primary"></button>
+                <button id="3.22" class="square btn btn-primary"></button>
+                <button id="3.23" class="square btn btn-primary"></button>
+                <button id="3.24" class="square btn btn-primary"></button>
+                <button id="3.25" class="square btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container4">
+        <div id="6x6grid" class="modal">
+            <div class="row">
+                <button id="4.1" class="square btn btn-primary"></button>
+                <button id="4.2" class="square btn btn-primary"></button>
+                <button id="4.3" class="square btn btn-primary"></button>
+                <button id="4.4" class="square btn btn-primary"></button>
+                <button id="4.5" class="square btn btn-primary"></button>
+                <button id="4.6" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="4.7" class="square btn btn-primary"></button>
+                <button id="4.8" class="square btn btn-primary"></button>
+                <button id="4.9" class="square btn btn-primary"></button>
+                <button id="4.10" class="square btn btn-primary"></button>
+                <button id="4.11" class="square btn btn-primary"></button>
+                <button id="4.12" class="square btn btn-primary"></button>
+            </div>
+    
+            <div class="row">
+                <button id="4.13" class="square btn btn-primary"></button>
+                <button id="4.14" class="square btn btn-primary"></button>
+                <button id="4.15" class="square btn btn-primary"></button>
+                <button id="4.16" class="square btn btn-primary"></button>
+                <button id="4.17" class="square btn btn-primary"></button>
+                <button id="4.18" class="square btn btn-primary"></button>
+            </div>
+
+            <div class="row">
+                <button id="4.19" class="square btn btn-primary"></button>
+                <button id="4.20" class="square btn btn-primary"></button>
+                <button id="4.21" class="square btn btn-primary"></button>
+                <button id="4.22" class="square btn btn-primary"></button>
+                <button id="4.23" class="square btn btn-primary"></button>
+                <button id="4.24" class="square btn btn-primary"></button>
+            </div>
+
+            <div class="row">
+                <button id="4.25" class="square btn btn-primary"></button>
+                <button id="4.26" class="square btn btn-primary"></button>
+                <button id="4.27" class="square btn btn-primary"></button>
+                <button id="4.28" class="square btn btn-primary"></button>
+                <button id="4.29" class="square btn btn-primary"></button>
+                <button id="4.30" class="square btn btn-primary"></button>
+            </div>
+
+            <div class="row">
+                <button id="4.31" class="square btn btn-primary"></button>
+                <button id="4.32" class="square btn btn-primary"></button>
+                <button id="4.33" class="square btn btn-primary"></button>
+                <button id="4.34" class="square btn btn-primary"></button>
+                <button id="4.35" class="square btn btn-primary"></button>
+                <button id="4.36" class="square btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <!-- SHOW THE FINAL SCORE -->
+            <a class="btn btn-secondary" href="/games/patternMemoryRunGame">Retry</a>
+            <a class="btn btn-secondary" href="/games">Return to main menu</a>
+        </div>
+    </div>
+
+    <div id="gameCompleteModal" class="modal">
+        <div class="modal-content">
+            <p>Game Complete. You achieved maximum score!</p>
+            <p>Final Score: 14</p>
+            <a class="btn btn-secondary" href="/games/patternMemoryRunGame">Retry</a>
+            <a class="btn btn-secondary" href="/games">Return to main menu</a>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    //  This is the animation for displaying the pattern
+    function lightUpButtons(pattern, current_modal) {
+        let delay = 1500;
+        let prefix;
+
+        //  Picking buttons based on active modal
+        if (current_modal.id === "3x3grid") {
+            prefix = "1.";
+        } else if (current_modal.id === "4x4grid") {
+            prefix = "2.";
+        } else if (current_modal.id === "5x5grid") {
+            prefix = "3.";
+        } else {
+            prefix = "4.";
+        }
+
+        pattern.forEach((value, index) => {
+            //  Flash all buttons at the same time
+            let button = document.getElementById(prefix + value.toString());
+            button.classList.add('active');
+
+            //  Unflash all buttons at the same time
+            setTimeout(() => {
+                button.classList.remove('active');
+            }, delay);
+        });
+    }
+
+    //  This is the main function
+    window.onload = function () {
+        //  REQUIRED VARIABLES
+        let grid = [1, 2, 3, 4, 5, 6, 7, 8, 9]  //  The initial grid
+
+        let pattern = [];       //  The randomized pattern
+        let userPattern = [];   //  User clicks
+        let grid_length = 3;    //  Number of squares on one row
+        let pattern_length = 3; //  Pattern length
+        let round = 1;          //  Current round
+        let is_equal = true;    //  The game ends after one mistake
+        let clicks = 0;         //  Number of clicks per round
+        var handlers = [];      //  Function addresses of each button
+        let litButtons = [];    //  Pressed buttons
+
+        let lives = 3;          //  Total number of mistakes allowed
+        document.getElementById('livesCount').textContent = lives;
+    
+        //  Pop-up grids
+        let current_modal;
+        let modal1 = document.getElementById('3x3grid');
+        let modal2 = document.getElementById('4x4grid');
+        let modal3 = document.getElementById('5x5grid');
+        let modal4 = document.getElementById('6x6grid');
+        let warning = document.getElementById('warning');
+
+        //  REQUIRED FUNCTIONS
+
+        function setGrid() {
+            switch (round) {
+                case 1:
+                    modal1.style.display = "block";
+                    current_modal = modal1;
+                    break;
+
+                case 3:
+                    modal2.style.display = "block";
+                    modal1.style.display = "none";
+                    current_modal = modal2;
+
+                    //  Increase row length
+                    grid_length = 4;
+
+                    //  Add the new buttons
+                    for (let square = 10; square <= grid_length ** 2; square++) {
+                        grid.push(square);
+                    }
+
+                    break;
+                
+                case 6:
+                    modal3.style.display = "block";
+                    modal2.style.display = "none";
+                    current_modal = modal3;
+
+                    //  Increase row length
+                    grid_length = 5;
+
+                    //  Add the new buttons
+                    for (let square = 17; square <= grid_length ** 2; square++) {
+                        grid.push(square);
+                    }
+                    break;
+                
+                case 10:
+                    modal4.style.display = "block";
+                    modal3.style.display = "none";
+                    current_modal = modal4;
+
+                    //  Increase row length
+                    grid_length = 6;
+
+                    //  Add the new buttons
+                    for (let square = 26; square <= grid_length ** 2; square++) {
+                        grid.push(square);
+                    }
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+
+        function insertPopUp() {
+            if (round == 15) {
+                let modal = document.getElementById('gameCompleteModal');
+                modal.style.display = "block"; 
+            } else {
+                let modal = document.getElementById('gameOverModal');
+                let modalContent = document.querySelector('.modal-content');
+        
+                modalContent.innerHTML = `
+                    <p>Game Over</p>
+                    <p>Final Score: ${round - 1}</p>
+                    <a class="btn btn-secondary" href="/games/patternMemoryRunGame">Retry</a>
+                    <a class="btn btn-secondary" href="/games">Return to main menu</a>
+                `;
+
+                modal.style.display = "block";
+            }
+            
+        }
+
+        function checkAvailabilityForNextRound() {
+            if (is_equal) {
+                round++;
+                pattern_length++;
+                
+                if (round == 15) {
+                    insertPopUp();
+                } else {
+                    startRound(); 
+                }
+                
+            } else {
+                lives--;
+                is_equal = true;
+
+                document.getElementById('livesCount').textContent = lives;
+
+                if (lives == 0) {
+                    insertPopUp();
+                } else {
+                    startRound();
+                }
+            }
+        }
+
+        function contains(pattern, crt_element) {
+            let ok = false;
+
+            pattern.forEach((element) => {
+                if (crt_element == element) {
+                    ok = true;
+                }
+            });
+
+            return ok;
+        }
+
+        //  This function represents what happens after a button is pressed
+        function buttonAction(button) {
+            let clicked_number = parseInt(button.id.substring(2));
+            console.log(clicked_number);
+
+            //  If a click repeats we just ignore it
+            if (!contains(userPattern, clicked_number)) {
+                userPattern.push(clicked_number);
+                clicks++;
+                if (!contains(pattern, userPattern[clicks - 1])) {
+                    is_equal = false;
+                    warning.style.display = "block";
+
+                    setTimeout(() => {
+                        warning.style.display = "none";
+                    }, 1500);
+                } else {
+                    button.classList.add('active');
+                    litButtons.push(button);
+                }
+
+                if (clicks == pattern_length || is_equal == false) {
+                    //  User can't click more than required
+                    removeListeners(current_modal);
+
+                    //  Unflash buttons
+                    litButtons.forEach((crtButton, index) => {
+                        crtButton.classList.remove('active');
+                    });
+
+                    checkAvailabilityForNextRound();
+                }
+            }
+        }
+
+        //  This function adds the event listeners for the 9 buttons
+        function addListeners(current_modal) {
+            let index = 0;
+
+            current_modal.querySelectorAll('.square').forEach(button => {
+                handlers[index] = () => buttonAction(button);
+                button.addEventListener('click', handlers[index]);
+
+                index++;
+            });
+        }
+
+        //  This function removes the event listeners for the 9 buttons
+        function removeListeners(current_modal) {
+            let index = 0;
+
+            current_modal.querySelectorAll('.square').forEach(button => {
+                button.removeEventListener('click', handlers[index]);
+
+                index++;
+            });
+        }
+
+        //  This function prepares the enviroment for a new round
+        function startRound() {
+            //  Reset variables
+            clicks = 0;
+            userPattern = [];
+            pattern = [];
+            handlers = [];
+
+            //  Set grid
+            setGrid();
+
+            //  Shuffle the grid
+            for (let i = grid.length - 1; i > 0; i--) { 
+                const j = Math.floor(Math.random() * (i + 1)); 
+                [grid[i], grid[j]] = [grid[j], grid[i]]; 
+            }
+
+            //  Generate a new pattern
+            for (let i = 0; i < pattern_length; i++) {
+                pattern.push(grid[i]);
+            }
+
+            //  Display pattern
+            lightUpButtons(pattern, current_modal);
+
+            //  Make buttons interactive
+            addListeners(current_modal);
+        }
+
+        startRound();
+    };
+</script>
+{% endblock %}
