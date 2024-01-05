@@ -2,51 +2,34 @@
 
 {% block content %}
     <style>
-        body {
-            background-color: teal;
-        }
-
         .title {
-            width: 100%;
-            padding-top: 50px;
-            display: flex;
             font-weight: bold;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            color: coral;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
 
-        .button-line {
-            background-color: coral;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            padding: 5px;
+        .back-button {
+                background-color: coral;
+                color: rgb(144, 45, 9);
+                font-size: 16px;
+                padding: 10px 20px;
+                display: inline-block;
+                position: relative;
+            }
+
+        .back-button::before {
+            content: '←';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-55%);
+            font-size: 35px;
         }
 
-        logbar a, userbar a {
+        back a {
             color: rgb(144, 45, 9);
             font-size: 3.5vh;
             margin-left: 30px;
             text-decoration: none;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-
-        userbar a {
-            margin-left: 950px;
-        }
-
-        .abouttext {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: justify;
-            color: coral;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: x-large;
         }
 
         .game-boxes {
@@ -81,14 +64,12 @@
 
     </style>
 
-    <div class="button-line">
-        <logbar>
-            <a href="/auth/login">Login</a>
-            <a href="/auth/sign-up">Sign up</a>
-        </logbar>
-        <userbar>
-            <a href="#">Profile</a>
-        </userbar>
+    <div class="button-line-left">
+        <div class="back-button">
+            <back>
+                <a href="/">Back</a>
+            </back>
+        </div>
     </div>
     
     <h1 class="title">
@@ -113,29 +94,29 @@
         <a href="/games/sequenceMemory">
             <div class="game-box-content">
                 <div class="game-box img">
-                    <img src="" alt="Game 2 Icon">
+                    <img src="https://imgs2.dab3games.com/sequence-memory-game.jpg" alt="Game 2 Icon">
                 </div>
                 <p>SEQUENCE MEMORY</p>
             </div>
         </a>
 
         <!-- Game Box 3 -->
-        <a href="/games/game3">
+        <a href="/games/wordGeneration">
             <div class="game-box-content">
                 <div class="game-box img">
-                    <img src="" alt="Game 3 Icon">
+                    <img src="https://www.artsprofessional.co.uk/sites/artsprofessional.co.uk/files/styles/551_by_350_feature/public/main/articles/words_0.jpg?itok=gR4FHmuW" alt="Game 3 Icon">
                 </div>
-                <p>Game 3</p>
+                <p>WORD GENERATION</p>
             </div>
         </a>
 
         <!-- Game Box 4 -->
-        <a href="/games/game4">
+        <a href="/games/matchingColors">
             <div class="game-box-content">
                 <div class="game-box img">
                     <img src="" alt="Game 4 Icon">
                 </div>
-                <p>Game 4</p>
+                <p>MATCHING COLORS</p>
             </div>
         </a>
 
