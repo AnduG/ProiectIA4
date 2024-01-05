@@ -35,7 +35,11 @@ def wordGeneration():
 
 @views.route('/games/matchingColors')
 def matchingColors():
-    return render_template('matchingColors.html')
+    return render_template('matchingColors-startscreen.html')
+
+@views.route('/games/matchingColorsRunGame')
+def displayGrid():
+    return render_template("matchingColors-run-game.html")
 
 @views.route('/games/game5')
 def game5():
