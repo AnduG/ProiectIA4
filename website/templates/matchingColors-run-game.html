@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: Arial, sans-serif;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2px;
+        width: 90%;
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .grid-container div {
+        width: 100%;
+        padding-top: 100%;
+        background-color: #ddd;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid grey;
+        width: 30%;
+        text-align: center;
+        border-radius: 8px;
+    }
+
+    .modal-button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+    }
+
+    .modal-button:hover {
+        background-color: coral;
+    }
+
+    .give-up-button {
+        display: none; /* Initially, the button is not displayed since
+                        the player cannot give up before the game starts */
+        position: fixed;
+        left: 15%;  
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+        background-color: white;
+    }
+
+    .give-up-button:hover {
+        background-color: coral;
+    }
+
+    #timerDisplay {
+        position: fixed;
+        top: 50%;
+        right: 11%;
+        transform: translate(-50%, -50%);
+        padding: 20px 20px;
+        font-size: 24px;
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    .timer-description {
+        position: fixed;
+        top: 57%;
+        right: 7.9%;
+        transform: translate(-50%, -50%);
+        padding: 5px 10px;
+        font-size: 16px;
+        font-weight: bold;
+        color: coral;
+    }
+</style>
+
+<body>
+    <div id="timerDisplay">4:00</div>
+    <p class="timer-description">Time remaining</p>
+
+    <button class="give-up-button" id="give-up-button" onclick="displayModalGiveUp()">Give up</button>
+
+    <!-- This is the modal for when the time is over -->
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <p>Good job!</p>
+            <button class="modal-button" onclick="playAgain()">Play Again</button>
+            <button class="modal-button" onclick="returnToMainPage()">Return to Main Page</button>
+            <h3>Time remaining: <span id="timerDisplay"></span></h3>
+        </div>
+    </div>
+
+    <!-- This is the modal for when the user gives up, remaining time is 0 -->
+    <div class="modal" id="gameOverModalGiveUp">
+        <div class="modal-content">
+            <p>Game Over!</p>
+            <button class="modal-button" onclick="playAgain()">Play Again</button>
+            <button class="modal-button" onclick="returnToMainPage()">Return to Main Page</button>
+            <h3>Time remaining: 0:00</h3>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <script>
+            // list of colors
+            let colorList = ['#FFFFFF', '#008000', '#000080',
+                            '#8B4513', '#2E8B57', '#6A5ACD',
+                            '#9932CC', '#8B0000', '#483D8B',
+                            '#FF8C00', '#32CD32', '#000000',
+                            '#4169E1', '#BA55D3', '#FF4500',
+                            '#20B2AA', '#B0E0E6', '#696969',
+                            '#FFFFFF', '#008000', '#000080',
+                            '#8B4513', '#2E8B57', '#6A5ACD',
+                            '#9932CC', '#8B0000', '#483D8B',
+                            '#FF8C00', '#32CD32', '#000000',
+                            '#4169E1', '#BA55D3', '#FF4500',
+                            '#20B2AA', '#B0E0E6', '#696969'];
+            
+            // used for the stopwatch
+            let intervalId;
+
+            // suffle function for an array
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1)); // Get a random index
+                    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+                }
+                return array;
+            }
+
+            shuffleArray(colorList);
+
+            const gridContainer = document.querySelector('.grid-container');
+            // firstClick represents the first square clicked by the user
+            let firstClick = null;
+            
+            // counter for the number of correct combinations
+            let correct = 0;
+    
+            // Generates 6x6 grid of squares of different colors
+            for (let i = 0; i < 36; i++) {
+                const square = document.createElement('div');
+                square.style.backgroundColor = colorList[i];
+                // event listener
+                square.addEventListener('click', function() {
+                    this.style.backgroundColor = colorList[i];
+                    if (firstClick === null) {
+                        firstClick = this;
+                    } else {
+                        if (firstClick.style.backgroundColor === this.style.backgroundColor) {
+                            correct++;
+                            // if correct === 18, game ends with a "win"
+                            if (correct === 18) {
+                                clearInterval(intervalId);
+                                displayGameOverModal(timeRemaining);
+                                document.getElementById('gameOverModal').style.display = 'block';
+                                return;
+                            }
+                            firstClick = null;
+                        } else {
+                            // if the 2 squares are different, after a 1 second delay,
+                            // they go back to their default color (#ddd)
+                            setTimeout(() => {
+                                firstClick.style.backgroundColor = '#ddd';
+                                this.style.backgroundColor = '#ddd';
+                                firstClick = null;
+                            }, 1000);
+                        }
+                    }
+                });
+                gridContainer.appendChild(square);
+            }
+
+            // Resets squares back to their default color (#ddd)
+            function resetColors() {
+                const squares = gridContainer.querySelectorAll('div');
+                squares.forEach(square => {
+                    square.style.backgroundColor = '#ddd';
+                });
+                // starts the timer for the game (4 minutes)
+                startTimer();
+                // displays the give up button
+                document.getElementById('give-up-button').style.display = 'block';
+            }
+
+            // Display colors for 3 seconds
+            setTimeout(resetColors, 3000);
+
+            let timeRemaining = 240; // 4 minutes in seconds
+            const timerDisplay = document.getElementById('timerDisplay');
+
+            // time display
+            function updateTimerDisplay(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainderSeconds = seconds % 60;
+                timerDisplay.textContent = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+            }
+
+            function startTimer() {
+                intervalId = setInterval(() => {
+                    timeRemaining--;
+                    updateTimerDisplay(timeRemaining);
+                    
+                    if (timeRemaining <= 0) {
+                        clearInterval(intervalId); // Stop the timer
+
+                        const modal = document.getElementById('gameOverModal');
+                        const modalContent = modal.querySelector('.modal-content');
+
+                        // Update modal content with the remaining time
+                        modalContent.innerHTML = `
+                            <p>Game over! Time is up!</p>
+                            <button class="modal-button" onclick="playAgain()">Play Again</button>
+                            <button class="modal-button" onclick="returnToMainPage()">Return to Main Page</button>
+                            <h3>Time remaining: 0:00</h3>
+                        `;
+                        modal.style.display = 'block';
+                        document.getElementById('gameOverModal').style.display = 'block'; // Display game over modal
+
+                        // Remaining time is guaranteed to be 0 here. Therefore, value 0 should be registered into the databse
+                    }
+                }, 1000); // updates every second
+            }
+
+            // Redirect to the same page
+            function playAgain() {
+                window.location.href = '/games/matchingColorsRunGame';
+            }
+
+            // Redirect to game page
+            function returnToMainPage() {
+                window.location.href = '/games';
+            }
+
+            // Displays modal for giving up
+            function displayModalGiveUp() {
+                document.getElementById('gameOverModalGiveUp').style.display = 'block';
+                clearInterval(intervalId);
+            }
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainderSeconds = seconds % 60;
+
+                let formattedTime = minutes + ':';
+
+                // adds a leading zero if seconds are less than 10
+                if (remainderSeconds < 10) {
+                    formattedTime += '0';
+                }
+
+                formattedTime += remainderSeconds;
+
+                return formattedTime;
+            }
+
+            function displayGameOverModal(time) {
+                const modal = document.getElementById('gameOverModal');
+                const modalContent = modal.querySelector('.modal-content');
+
+                // Update modal content with the remaining time
+                modalContent.innerHTML = `
+                    <p>Good job!</p>
+                    <button class="modal-button" onclick="playAgain()">Play Again</button>
+                    <button class="modal-button" onclick="returnToMainPage()">Return to Main Page</button>
+                    <h3>Time remaining: ${formatTime(time)}</h3>
+                `;
+                modal.style.display = 'block';
+
+                // this is where the remaining time should be registered into the database
+            }
+        </script>
+    </div>
+</body>
+{% endblock %}
