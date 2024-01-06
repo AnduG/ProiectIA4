@@ -82,6 +82,10 @@ def aimSession():
     return render_template("aimTraining-run-game.html")
 
 # Game 8
-@views.route('games/game8')
-def game8():
-    return
+@views.route('/games/fastTyping')
+def fastTyping():
+    return render_template("fastTyping-startscreen.html")
+
+@views.route('/games/fastTypingRunGame')
+def typingSession():
+    return render_template("fastTyping-run-game.html")
