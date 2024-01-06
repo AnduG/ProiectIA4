@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+  <style>
+    body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height: 100vh;
+    margin: 0;
+    margin-top: 150px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: 100vh;
+}
+
+.wordContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 20px;
+}
+
+#wordDisplay,
+#highlightedWord {
+    font-weight: bold;
+    font-size: 8vh;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#wordDisplay {
+    left: 50%; /* Center the displayed word */
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#highlightedWord {
+    left: 0;
+}
+    .correct {
+        color: greenyellow;
+    }
+
+    .incorrect {
+        color: red;
+    }
+
+    .timerDisplay {
+        margin-left: 1vw;
+        margin-bottom: 2vw;
+        font-weight: bold;
+        font-size: 3.5vh;
+        color: greenyellow; /* Adjust the color as needed */
+    }
+
+    #userInput {
+        position: absolute;
+        top: -9999px;
+    }
+
+    .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3 ease-in-out;
+            background-color: lightskyblue;
+        }
+
+        .modal-content {
+            background-color: rgb(99, 149, 243);
+            align-items: center;
+            margin: 15% auto;
+            padding: 2vw;
+            border: 1px solid rgb(0, 0, 0);
+            width: 50%;
+            color: rgb(255, 255, 255);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: x-large;
+        }
+
+        .modal button {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 3vw;
+            padding: 1vw 2vw;
+            font-size: 1.5vw;
+            margin-top: 1vw;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #357a37;
+        }
+
+        #giveup {
+            position: absolute;
+            bottom: 10vw;
+            background-color: rgb(183, 90, 56);
+            color: white;
+            font-weight: bold;
+            border: grey;
+        }
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4">Typing Game</h1>
+
+        <div class="timerDisplay" id="timerDisplay">Time: 60s</div>
+
+        <div class="wordContainer">
+            <div id="wordDisplay"></div>
+            <div id="highlightedWord"></div>
+        </div>
+    </div>
+
+    <input type="text" id="userInput" oninput="checkInput()" autofocus>
+
+    <button id="giveup" class="btn btn-primary">Give up</button>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <p>Final Score: <span id="finalScore"></span></p>
+            <button onclick="retryGame()">Retry</button>
+            <button onclick="returnToMainMenu()">Return to main menu</button>
+        </div>
+    </div>
+
+    <script>
+        const words = [
+            'sunshine', 'mountain', 'river', 'ocean', 'forest', 'guitar', 'piano', 'painting', 'laughter', 'adventure', 'journey', 'discovery', 'happiness', 'harmony', 'serenity', 'whisper', 'inspiration', 'imagination', 'passion', 'symphony', 'meadow', 'blossom', 'breeze', 'tranquility', 'sunset', 'horizon', 'silhouette', 'candlelight', 'twilight', 'reflection', 'ripple', 'sparkle', 'cascade', 'serendipity', 'enchantment', 'whimsical', 'ethereal', 'effervescent', 'lullaby', 'gentle', 'soothing', 'velvet', 'mesmerize', 'mystique', 'delicate', 'iridescent', 'luminescent', 'envelop', 'cherish', 'savor', 'captivate', 'embrace', 'tender', 'caress', 'delight', 'ecstasy', 'blissful', 'radiant', 'tranquil', 'serene', 'whisper', 'enchanting', 'radiance', 'allure', 'resplendent', 'cascading', 'graceful', 'ephemeral', 'surrender', 'vibrant', 'quiescent', 'illuminating', 'luminous', 'effulgent', 'scintillating', 'spellbinding', 'sublime', 'ethereal', 'rhapsody', 'illuminate', 'symbiotic', 'rapture', 'mellifluous', 'infinite', 'ephemeral', 'oblivion', 'enigmatic', 'evanescent', 'petrichor'
+        ];
+
+        const gameDuration = 60 * 1000; // 30 seconds in milliseconds
+        let currentWordIndex = 0;
+        let currentLetterIndex = 0;
+        let startTime;
+        let timerInterval;
+        let score = 0;
+        let correctLettersSet = new Set();
+
+        function startGame() {
+            startTime = new Date();
+            displayWord();
+            timerInterval = setInterval(updateTimer, 1000);
+            setTimeout(endGame, gameDuration);
+        }
+
+        function updateTimer() {
+            const elapsedTime = (new Date() - startTime) / 1000;
+            const remainingTime = Math.max(0, Math.ceil(gameDuration / 1000 - elapsedTime));
+            document.getElementById('timerDisplay').textContent = `Time: ${remainingTime}s`;
+        }
+
+        function displayWord() {
+            if (currentWordIndex < words.length) {
+                const currentWord = words[currentWordIndex];
+                correctLettersSet.clear();
+                document.getElementById('wordDisplay').textContent = currentWord;
+                updateHighlightedWordPosition();
+            } else {
+                endGame();
+            }
+        }
+
+        function checkInput() {
+            const userInput = document.getElementById('userInput').value.trim();
+            const currentWord = words[currentWordIndex];
+
+            document.getElementById('highlightedWord').innerHTML = '';
+
+            for (let i = userInput.length; i < currentWord.length; i++) {
+                let ret = correctLettersSet.delete(i);
+                if (ret == true) {
+                    score--;
+                }
+            }
+
+            for (let i = 0; i < userInput.length; i++) {
+                const letterSpan = document.createElement('span');
+                letterSpan.textContent = currentWord[i];
+
+                if (i < currentWord.length && userInput[i] === currentWord[i]) {
+                    letterSpan.classList.add('correct');
+
+                    if (!correctLettersSet.has(i)) {
+                        score++;
+                        correctLettersSet.add(i);
+                    }
+                } else {
+                    letterSpan.classList.add('incorrect');
+
+                    if (correctLettersSet.has(i)) {
+                        score--;
+                        correctLettersSet.delete(i);
+                    }
+                }
+
+                document.getElementById('highlightedWord').appendChild(letterSpan);
+            }
+
+            let correctIndex = 0;
+            while (correctIndex < userInput.length && correctIndex < currentWord.length && userInput[correctIndex] === currentWord[correctIndex]) {
+                correctIndex++;
+            }
+
+            currentLetterIndex = correctIndex;
+
+            if (userInput === currentWord) {
+                currentWordIndex++;
+                currentLetterIndex = 0;
+                document.getElementById('userInput').value = '';
+                document.getElementById('highlightedWord').innerHTML = '';
+                displayWord();
+            }
+        }
+
+        function endGame() {
+            insertPopUp();
+            resetGame();
+        }
+
+        function resetGame() {
+            currentWordIndex = 0;
+            currentLetterIndex = 0;
+            document.getElementById('wordDisplay').textContent = '';
+            document.getElementById('userInput').value = '';
+            document.getElementById('highlightedWord').innerHTML = '';
+        }
+
+        function updateHighlightedWordPosition() {
+            const displayedWord = document.getElementById('wordDisplay');
+            const highlightedWord = document.getElementById('highlightedWord');
+
+            // Must reset left offset
+            highlightedWord.style.left = 0;
+
+            // Calculate offset
+            const offset = displayedWord.getBoundingClientRect().left - highlightedWord.getBoundingClientRect().left;
+
+            // Set left offset
+            highlightedWord.style.left = `${offset}px`;
+        }
+
+        function handleClick() {
+            document.getElementById('userInput').focus();
+        }
+
+        function insertPopUp() {
+            let modal = document.getElementById('gameOverModal');
+            let modalContent = document.querySelector('.modal-content');
+            let finalScore = document.getElementById('finalScore');
+
+            finalScore.textContent = score; // Assuming 'score' is the variable holding the user's score
+
+            modal.style.display = "block";
+        }
+
+        function retryGame() {
+            window.location.href = "/games/fastTypingRunGame";
+        }
+
+        function returnToMainMenu() {
+            window.location.href = "/games";
+        }
+
+        document.getElementById("giveup").addEventListener('click', function (event) {
+            insertPopUp();
+        });
+
+        document.body.addEventListener('click', handleClick);
+
+        window.onload = startGame();
+    </script>
+</body>
+</html>
+{% endblock %}
