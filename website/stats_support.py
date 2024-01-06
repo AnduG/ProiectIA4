@@ -56,7 +56,7 @@ def make_stats():
     all_stats = [
         {"name": "Reaction Time", "value": make_stats_for(game_id=1)},
         {"name": "Sequence Memory", "value": make_stats_for(game_id=2)},
-        {"name": "Word Generation", "value": make_stats_for(game_id=3)},
+        {"name": "Word Generation", "value": make_stats_for(game_id=Statistics.word_generation.value)},
         {"name": "Matching Colors", "value": make_stats_for(game_id=4)},
         {"name": "placeholder1", "value": make_stats_for(game_id=5)},
         {"name": "placeholder2", "value": make_stats_for(game_id=6)}
