@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
-from flask_login import current_user
+from flask_login import current_user, login_required
+from website.stats_support import make_stats
 import random
 
 views = Blueprint('views', __name__)
@@ -11,6 +12,10 @@ def homepage():
     else:
         return render_template('homepage.html')
         
+@views.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', stats = make_stats())
 
 @views.route('/games')
 def games():
