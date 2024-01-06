@@ -138,6 +138,7 @@
 
         //  REQUIRED FUNCTIONS
 
+        //  This function sets the game over pop up when necessary
         function insertPopUp() {
             let modal = document.getElementById('gameOverModal');
             let modalContent = document.querySelector('.modal-content');
@@ -152,6 +153,7 @@
             modal.style.display = "block";
         }
 
+        //  This function checks if the user input is correct
         function checkAvailabilityForNextRound() {
             if (is_equal) {
                 round++;

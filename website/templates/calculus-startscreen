@@ -20,7 +20,6 @@
 
     .title {
         margin-top: 4vw;
-        font-weight: bold;
     }
 
     play_button a {
@@ -39,19 +38,15 @@
 
 <body>
     <div class="title">
-        <h1>Aim Training Game</h1>
+        <h1>Pattern Memory Game</h1>
     </div>
 
     <div class="container">
-        <p>
-            Multiple targets will be displayed all over the screen. Try to aim for as many as possible in 60 seconds.
-            The first target will always be placed in the top-left corner. The game will start as soon as you press
-            on the first target.
-        </p>
+        <p>Try to solve as many basic operations as you can in a minute!</p>
         
         <div class="centering_container">
             <play_button>
-                <a href="/games/aimTrainingRunGame">Start</a>
+                <a href="/games/calculusRunGame">Start</a>
             </play_button>
         </div>
     </div>

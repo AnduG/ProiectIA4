@@ -22,7 +22,6 @@ def profile():
 def games():
     return render_template('gamepage.html')
 
-# To be completed with templates for each of the 8 games.
 # Game 1 - reaction time
 @views.route('/games/reactionTime', methods=['GET','POST'])
 def reactionTime():
@@ -64,10 +63,14 @@ def patternMemory():
 def displayPattern():
     return render_template("pattern-run-game.html")
 
-# Game 6
-@views.route('/games/game6')
-def game6():
-    return
+# Game 6 - quick calculus
+@views.route('/games/calculus')
+def calculus():
+    return render_template('calculus-startscreen')
+
+@views.route('/games/calculusRunGame')
+def calculusExecution():
+    return render_template('calculus-run-game.html')
 
 # Game 7 - aim training
 @views.route('/games/aimTraining')
