@@ -4,10 +4,12 @@ from sqlalchemy.sql import func
 import enum
 
 class Activities(enum.Enum):
-    verbal_memory = 1
-    number_memory = 2
-    visual_memory = 3
-    reaction_time = 4
+    reaction_time = 1
+    sequence_memory = 2
+    word_generation = 3
+    matching_colors = 4
+    placeholder_acitivity_1 = 5
+    placeholder_acitivity_2 = 6
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
