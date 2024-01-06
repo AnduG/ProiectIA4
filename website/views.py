@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from flask_login import current_user, login_required
-from website.stats_support import make_stats
+from website.stats_support import make_stats, upload_stats
+from website.models import Activities
 import random
 
 views = Blueprint('views', __name__)
@@ -23,30 +24,34 @@ def games():
 
 # To be completed with templates for each of the 8 games.
 # Game 1 - reaction time
-@views.route('/games/reactionTime')
+@views.route('/games/reactionTime', methods=['GET','POST'])
 def reactionTime():
     return
 
 # Game 2 - sequence memory
-@views.route('/games/sequenceMemory')
+@views.route('/games/sequenceMemory', methods=['GET','POST'])
 def sequenceMemory():
     return render_template("sequence-startscreen.html")
 
-@views.route('/games/sequenceMemoryRunGame')
+@views.route('/games/sequenceMemoryRunGame', methods=['GET','POST'])
 def displaySequence():
     return render_template("sequence-run-game.html")
 
 # Game 3 - word generation
-@views.route('/games/wordGeneration')
+@views.route('/games/wordGeneration', methods=['GET','POST'])
 def wordGeneration():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.word_generation.name, score)
     return render_template('wordGeneration.html')
 
 # Game 4 - matching colors
-@views.route('/games/matchingColors')
+@views.route('/games/matchingColors', methods=['GET','POST'])
 def matchingColors():
     return render_template('matchingColors-startscreen.html')
 
-@views.route('/games/matchingColorsRunGame')
+@views.route('/games/matchingColorsRunGame', methods=['GET','POST'])
 def displayGrid():
     return render_template("matchingColors-run-game.html")
 
