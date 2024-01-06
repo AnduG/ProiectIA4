@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+
+<head>
+  <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 20vh;
+    }
+
+    .form-container form {
+        padding: 1.5vw;
+    }
+
+    .form-container input[type="text"] {
+        padding: 1vw;
+        font-size: 1.5vw;
+        width: 30vw;
+        border-radius: 1vw;
+        background-color: rgb(180, 227, 180);
+        box-shadow: 0.05vw 0.05vw 0.8vw rgba(0, 0, 0, 0.5);
+        color: rgb(78, 76, 76);
+    }
+
+    .button {
+        padding: 1vw 2vw;
+        font-size: 1.5vw;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 3vw;
+        transition: background-color 0.3s, color 0.3s;
+        box-shadow: 0.05vw 0.05vw 0.8vw rgba(0, 0, 0, 0.5);
+    }
+
+    .button:hover {
+        background-color: #357a37;
+        color: #65de69;
+        box-shadow: 0.05vw 0.05vw 0.8vw rgba(0, 0, 0, 0.5);
+    }
+
+    .timeRemaining {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        color: greenyellow;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: bold;
+    }
+
+    .calculus {
+        width: 100%;
+        padding-top: 2vw;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        color: rgb(157, 247, 155);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        font-size: 3.5vh
+    }
+
+    .timerDisplay {
+        margin-left: 1vw;
+        font-weight: bold;
+        font-size: 3.5vh
+    }
+
+    .title {
+        padding-bottom: 5vw;
+    }
+    
+    #giveup {
+        position: absolute;
+        bottom: 10vw;
+        background-color: rgb(183, 90, 56);
+        color: white;
+        font-weight: bold;
+        border: grey
+    }
+
+    .btn-secondary {
+        background-color: lightskyblue;
+        border-color: rgb;
+        display: inline;
+        margin-bottom: 0.5vw;
+        font-size: 3.5vh;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        transition: all 0.3 ease-in-out;
+        background-color: lightskyblue;
+    }
+
+    .modal-content {
+        background-color: rgb(99, 149, 243);
+        align-items: center;
+        margin: 15% auto;
+        padding: 2vw;
+        border: 1px solid rgb(0,0,0);
+        width: 50%;
+        color: rgb(255, 255, 255);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: x-large;
+    }
+
+  </style>
+</head>
+
+<body>
+    <div class="title">
+        <h1>Quick Calculus</h1>
+    </div>
+
+    <div class="timeRemaining">
+        <h3>Time remaining:</h3>
+        <div class="timerDisplay" id="timerDisplay">
+            <h3>1:00</h3>
+        </div>        
+    </div>
+
+    <div class="timeRemaining">
+        <h3 id="scoreDisplay"></h3>
+    </div>
+
+    <div class="calculus" id="calculus">1+1</div>
+
+    <div class="form-container">
+        <form>
+            <input type="text" id="userResult" placeholder="Result">
+        </form>
+        <button class="button" id="refresh">Refresh</button>
+    </div>
+    
+    <button id="giveup" class="btn btn-primary">Give up</button>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <!-- SHOW THE FINAL SCORE -->
+            <a class="btn btn-secondary" href="/games/calculusRunGame">Retry</a>
+            <a class="btn btn-secondary" href="/games">Return to main menu</a>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    window.onload = function() {
+        //  NECESSARY VARIABLES
+        let multiply1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //  First multiplication element
+        let multiply2;                                      //  Second multiplication element
+        let sum1;                                           //  First sum element
+        let sum2;                                           //  Second sum element
+        let result;                                         //  Operation result
+        let score = 0;                                      //  User score
+        let time = 60;
+        let which_operation = Math.floor(Math.random() * 2) + 1;    //  1 for sum 2 for muliplication
+
+        //  Event listeners
+        let timer_display = document.getElementById("timerDisplay");
+        let score_display = document.getElementById("scoreDisplay");
+        let result_display = document.getElementById("calculus");
+        let user_result = document.getElementById("userResult");
+
+        //  REQUIRED FUNCTIONS
+        
+        //  This function sets the game over pop up when the time is up
+        function insertPopUp() {
+            let modal = document.getElementById('gameOverModal');
+            let modalContent = document.querySelector('.modal-content');
+    
+            modalContent.innerHTML = `
+                <p>Game Over</p>
+                <p>Final Score: ${score}</p>
+                <a class="btn btn-secondary" href="/games/calculusRunGame">Retry</a>
+                <a class="btn btn-secondary" href="/games">Return to main menu</a>
+            `;
+
+            modal.style.display = "block";
+        }
+
+        //  This function prepares the enviroment for each operation
+        function startRound() {
+            score_display.innerHTML = `Score: ${score}`;
+            user_result.focus();
+
+            which_operation = Math.floor(Math.random() * 2) + 1
+
+            if (which_operation == 1) {
+                sum1 = Math.floor(Math.random() * 101);
+                sum2 = Math.floor(Math.random() * 101);
+
+                result = sum1 + sum2;
+                result_display.innerText = `${sum1} + ${sum2}`;
+            } else {
+                let picked_elem = multiply1[Math.floor(Math.random() * 11)];
+                multiply2 = Math.floor(Math.random() * 101);
+
+                result = picked_elem * multiply2;
+                result_display.innerHTML = `${picked_elem} * ${multiply2}`;
+            }
+
+            user_result.value = "";
+        }
+
+        //  This function checks the user's result
+        function checkResult() {
+            let user_answer = parseInt(user_result.value);
+            user_result.value = '';
+
+            if (user_answer == result) {
+                console.log("correct");
+                return true;
+            }
+
+            console.log("incorrect");
+            return false;
+        }
+
+        //  This function starts the timer for the game
+        function startTimer() {
+            setInterval(function () {
+                time--;
+                if (time >= 0) {
+                    timerDisplay.innerHTML = `${time}`;
+                }
+                if (time == 0) {
+                    clearInterval(startTimer);
+                    insertPopUp();
+                }
+            }, 1000);
+        }
+        
+        //  EXECUTION STARTS HERE
+
+        //  Don't allow character input
+        user_result.addEventListener('input', function(event) {
+            let enteredValue = event.target.value;
+            let numericValue = enteredValue.replace(/[^0-9]/g, '');
+
+            //  Only numbers will appear in the input
+            event.target.value = numericValue;
+        });
+
+        //  Submit process
+        user_result.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+    
+                if (checkResult()) {
+                    score++;
+                    startRound();
+                }
+            }            
+        });
+
+        //  The refresh button will just change the equation given
+        document.getElementById("refresh").addEventListener('click', function(event) {
+            startRound();
+        })
+
+        document.getElementById("giveup").addEventListener('click', function(event) {
+            clearInterval(startTimer);
+            insertPopUp();
+        })
+
+        startTimer();
+        startRound();
+    }
+    
+</script>
+{% endblock %}
