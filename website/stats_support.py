@@ -62,3 +62,8 @@ def make_stats():
         {"name": "placeholder2", "value": make_stats_for(game_id=6)}
     ]
     return all_stats
+
+def upload_stats(game_id, game_results):
+    new_stats = Statistics(owner_id=current_user.get_id(), type=game_id, results=game_results,)
+    db.session.add(new_stats)
+    db.session.commit()
