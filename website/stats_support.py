@@ -6,7 +6,9 @@ def get_all_data_for(game_id):
     return Statistics.query.filter_by(owner_id=current_user.get_id(), type=game_id).all()
 
 def get_attempt_count(game_id):
-    return Statistics.query.filter_by(owner_id=current_user.get_id(), type=game_id).all().count()
+    stats = Statistics.query.filter_by(owner_id=current_user.get_id(), type=game_id).all()
+    results = [stat.results for stat in stats]
+    return len(results)
 
 def get_best_attempt_for(game_id):
     stat = Statistics.query.filter_by(owner_id=current_user.get_id(), type=game_id).\
@@ -52,10 +54,11 @@ def make_stats_for(game_id):
 
 def make_stats():
     all_stats = [
-        {"name": "", "value": make_stats_for(game_id=1)}
-        {"name": "", "value": make_stats_for(game_id=2)}
-        {"name": "", "value": make_stats_for(game_id=3)}
-        {"name": "", "value": make_stats_for(game_id=4)}
-        {"name": "", "value": make_stats_for(game_id=5)}
-        {"name": "", "value": make_stats_for(game_id=6)}
+        {"name": "Reaction Time", "value": make_stats_for(game_id=1)},
+        {"name": "Sequence Memory", "value": make_stats_for(game_id=2)},
+        {"name": "Word Generation", "value": make_stats_for(game_id=3)},
+        {"name": "Matching Colors", "value": make_stats_for(game_id=4)},
+        {"name": "placeholder1", "value": make_stats_for(game_id=5)},
+        {"name": "placeholder2", "value": make_stats_for(game_id=6)}
     ]
+    return all_stats
