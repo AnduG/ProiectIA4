@@ -140,7 +140,7 @@
             'sunshine', 'mountain', 'river', 'ocean', 'forest', 'guitar', 'piano', 'painting', 'laughter', 'adventure', 'journey', 'discovery', 'happiness', 'harmony', 'serenity', 'whisper', 'inspiration', 'imagination', 'passion', 'symphony', 'meadow', 'blossom', 'breeze', 'tranquility', 'sunset', 'horizon', 'silhouette', 'candlelight', 'twilight', 'reflection', 'ripple', 'sparkle', 'cascade', 'serendipity', 'enchantment', 'whimsical', 'ethereal', 'effervescent', 'lullaby', 'gentle', 'soothing', 'velvet', 'mesmerize', 'mystique', 'delicate', 'iridescent', 'luminescent', 'envelop', 'cherish', 'savor', 'captivate', 'embrace', 'tender', 'caress', 'delight', 'ecstasy', 'blissful', 'radiant', 'tranquil', 'serene', 'whisper', 'enchanting', 'radiance', 'allure', 'resplendent', 'cascading', 'graceful', 'ephemeral', 'surrender', 'vibrant', 'quiescent', 'illuminating', 'luminous', 'effulgent', 'scintillating', 'spellbinding', 'sublime', 'ethereal', 'rhapsody', 'illuminate', 'symbiotic', 'rapture', 'mellifluous', 'infinite', 'ephemeral', 'oblivion', 'enigmatic', 'evanescent', 'petrichor'
         ];
 
-        const gameDuration = 60 * 1000; // 30 seconds in milliseconds
+        const gameDuration = 60 * 1000;
         let currentWordIndex = 0;
         let currentLetterIndex = 0;
         let startTime;
@@ -260,7 +260,7 @@
             let modalContent = document.querySelector('.modal-content');
             let finalScore = document.getElementById('finalScore');
 
-            finalScore.textContent = score; // Assuming 'score' is the variable holding the user's score
+            finalScore.textContent = score;
 
             modal.style.display = "block";
         }
