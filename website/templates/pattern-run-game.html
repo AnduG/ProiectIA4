@@ -363,6 +363,7 @@
 
         //  REQUIRED FUNCTIONS
 
+        //  This function sets the appropriate modal at the right round
         function setGrid() {
             switch (round) {
                 case 1:
@@ -418,6 +419,7 @@
             }
         }
 
+        //  This function sets the game over pop up when the user has ran out of lives
         function insertPopUp() {
             if (round == 15) {
                 let modal = document.getElementById('gameCompleteModal');
@@ -438,6 +440,7 @@
             
         }
 
+        //  This function checks if the user input is correct
         function checkAvailabilityForNextRound() {
             if (is_equal) {
                 round++;
@@ -463,6 +466,7 @@
             }
         }
 
+        //  This function checks if crt_element can be found in pattern
         function contains(pattern, crt_element) {
             let ok = false;
 

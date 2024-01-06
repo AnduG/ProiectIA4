@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+
+<head>
+  <style>
+    body {
+        background-color: teal;
+    }
+
+    .container {
+        margin-left: 11vw;
+        margin-top: 6vw;
+        color: coral;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 3.5vh;
+        text-align: center;
+    }
+
+    .title {
+        margin-top: 4vw;
+    }
+
+    play_button a {
+        color: rgb(144, 45, 9);
+        font-size: 3.5vh;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        display: inline-block;
+        text-align: center;
+        border-radius: 20px;
+        background-color: coral;
+        padding: 10px 20px;
+        font-size: 4vh;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="title">
+        <h1>Pattern Memory Game</h1>
+    </div>
+
+    <div class="container">
+        <p>Try to solve as many basic operations as you can in a minute!</p>
+        
+        <div class="centering_container">
+            <play_button>
+                <a href="/games/calculusRunGame">Start</a>
+            </play_button>
+        </div>
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

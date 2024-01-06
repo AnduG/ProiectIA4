@@ -49,6 +49,10 @@ def patternMemory():
 def displayPattern():
     return render_template("pattern-run-game.html")
 
-@views.route('/games/game6')
-def game6():
-    return
+@views.route('/games/calculus')
+def calculus():
+    return render_template('calculus-startscreen')
+
+@views.route('/games/calculusRunGame')
+def calculusExecution():
+    return render_template('calculus-run-game.html')
