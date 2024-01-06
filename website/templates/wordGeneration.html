@@ -167,6 +167,19 @@
 
     function returnToMainPage() {
         // Redirect to game page
+        fetch('/games/wordGeneration', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+                 },
+        body: JSON.stringify({ score: score }),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log(data);
+        window.location.href = '/games';
+    })
+    .catch(error => console.error('Error:', error));
         window.location.href = '/games';
     }
 
