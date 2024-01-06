@@ -1,6 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+    <style>
+        .back-button {
+                background-color: coral;
+                color: rgb(144, 45, 9);
+                font-size: 16px;
+                padding: 10px 20px;
+                display: inline-block;
+                position: relative;
+            }
+
+        .back-button::before {
+            content: '←';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-55%);
+            font-size: 35px;
+        }
+
+        back a {
+            color: rgb(144, 45, 9);
+            font-size: 3.5vh;
+            margin-left: 30px;
+            text-decoration: none;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+    </style>
+    <div class="button-line-left">
+        <div class="back-button">
+            <back>
+                <a href="/">Back</a>
+            </back>
+        </div>
+    </div>
+
 <div class="centering_container">
     <h1 align="center">Your Profile</h1>
 </div>
@@ -9,18 +46,21 @@
         <thead>
             <tr>
                 <th>Activity</th>
-                <th>Column 2</th>
-                <th>Column 3</th>
-                <th>Column 4</th>
-                <th>Column 5</th>
+                <th>Attempt Count</th>
+                <th>Best Attempt</th>
+                <th>Latest Attempt</th>
+                <th>Average Attempt</th>
+                <th>Global Average</th>
                 <!-- Add more headers as needed based on your data -->
             </tr>
         </thead>
         <tbody>
-            {% for row in statistics_data %}
+            {% for game in stats %}
                 <tr>
-                    <td>test</td>
-                    <td>teste2</td>
+                    <td>{{ game['name'] }}</td>
+                    {% for game_stats in game['value'] %}
+                        <td>{{ game_stats['value'] }}</td>
+                    {% endfor %}
                     <!-- Add more data cells as needed based on your data -->
                 </tr>
             {% endfor %}
