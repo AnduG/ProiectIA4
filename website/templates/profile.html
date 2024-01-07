@@ -12,6 +12,16 @@
                 position: relative;
             }
 
+        .logout-button {
+                background-color: coral;
+                color: rgb(144, 45, 9);
+                font-size: 16px;
+                padding: 10px 20px;
+                display: inline-block;
+                position: relative;
+                margin-right: 1vw;
+            }
+
         .back-button::before {
             content: '←';
             position: absolute;
@@ -36,7 +46,13 @@
                 <a href="/">Back</a>
             </back>
         </div>
+        <div class="logout-button">
+            <back>
+                <a href="/auth/logout">Logout</a>
+            </back>
+        </div>
     </div>
+    
 
 <div class="centering_container">
     <h1 align="center">Your Profile</h1>
