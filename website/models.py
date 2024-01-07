@@ -8,8 +8,10 @@ class Activities(enum.Enum):
     sequence_memory = 2
     word_generation = 3
     matching_colors = 4
-    placeholder_acitivity_1 = 5
-    placeholder_acitivity_2 = 6
+    pattern_memory = 5
+    quick_calculus = 6
+    aim_training = 7
+    fast_typing = 8
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
