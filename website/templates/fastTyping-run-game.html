@@ -4,44 +4,45 @@
 <head>
   <style>
     body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    height: 100vh;
-    margin: 0;
-    margin-top: 150px;
-}
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        height: 100vh;
+        margin: 0;
+        margin-top: 150px;
+    }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
-    height: 100vh;
-}
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: center; */
+        height: 100vh;
+    }
 
-.wordContainer {
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-top: 20px;
-}
+    .wordContainer {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-top: 20px;
+    }
 
-#wordDisplay,
-#highlightedWord {
-    font-weight: bold;
-    font-size: 8vh;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
+    #wordDisplay,
+    #highlightedWord {
+        font-weight: bold;
+        font-size: 8vh;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 
-#wordDisplay {
-    left: 50%; /* Center the displayed word */
-    transform: translateX(-50%) translateY(-50%);
-}
+    #wordDisplay {
+        left: 50%; /* Center the displayed word */
+        transform: translateX(-50%) translateY(-50%);
+    }
 
-#highlightedWord {
-    left: 0;
-}
+    #highlightedWord {
+        left: 0;
+    }
+
     .correct {
         color: greenyellow;
     }
@@ -64,49 +65,46 @@
     }
 
     .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-            transition: all 0.3 ease-in-out;
-            background-color: lightskyblue;
-        }
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
 
-        .modal-content {
-            background-color: rgb(99, 149, 243);
-            align-items: center;
-            margin: 15% auto;
-            padding: 2vw;
-            border: 1px solid rgb(0, 0, 0);
-            width: 50%;
-            color: rgb(255, 255, 255);
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: x-large;
-        }
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid grey;
+        width: 30%;
+        text-align: center;
+        border-radius: 8px;
+    }
 
-        .modal button {
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 3vw;
-            padding: 1vw 2vw;
-            font-size: 1.5vw;
-            margin-top: 1vw;
-            cursor: pointer;
-        }
+    .modal button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+    }
 
-        .modal button:hover {
-            background-color: #357a37;
-        }
+    .modal button:hover {
+        background-color: coral;
+    }
 
-        #giveup {
-            position: absolute;
-            bottom: 10vw;
-            background-color: rgb(183, 90, 56);
-            color: white;
-            font-weight: bold;
-            border: grey;
-        }
+    #giveup {
+        position: absolute;
+        bottom: 10vw;
+        background-color: rgb(183, 90, 56);
+        color: white;
+        font-weight: bold;
+        border: grey;
+    }
   </style>
 </head>
 
