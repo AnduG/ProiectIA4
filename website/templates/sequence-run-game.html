@@ -160,6 +160,21 @@
             `;
 
             modal.style.display = "block";
+
+            fetch('/games/sequenceMemory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ score: round-1 }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
 
         //  This function checks if the user input is correct
