@@ -152,15 +152,18 @@
             startTime = new Date();
             displayWord();
             timerInterval = setInterval(updateTimer, 1000);
+            // Set a timeout for 60s
             setTimeout(endGame, gameDuration);
         }
 
+        // Update the displayed timer
         function updateTimer() {
             const elapsedTime = (new Date() - startTime) / 1000;
             const remainingTime = Math.max(0, Math.ceil(gameDuration / 1000 - elapsedTime));
             document.getElementById('timerDisplay').textContent = `Time: ${remainingTime}s`;
         }
 
+        // Displays the current word (black)
         function displayWord() {
             if (currentWordIndex < words.length) {
                 const currentWord = words[currentWordIndex];
@@ -172,12 +175,16 @@
             }
         }
 
+        // Checks if input is according to the displayed word
+        // If not, highlight the current typed letter in red
+        // Otherwise, highlight the current typed letter in green
         function checkInput() {
             const userInput = document.getElementById('userInput').value.trim();
             const currentWord = words[currentWordIndex];
 
             document.getElementById('highlightedWord').innerHTML = '';
 
+            // Decrement score if user has deleted characters
             for (let i = userInput.length; i < currentWord.length; i++) {
                 let ret = correctLettersSet.delete(i);
                 if (ret == true) {
@@ -185,6 +192,7 @@
                 }
             }
 
+            // Calculates score accordingly (based on the number of correct characters)
             for (let i = 0; i < userInput.length; i++) {
                 const letterSpan = document.createElement('span');
                 letterSpan.textContent = currentWord[i];
@@ -205,9 +213,11 @@
                     }
                 }
 
+                // Shows the highlighted word
                 document.getElementById('highlightedWord').appendChild(letterSpan);
             }
 
+            // Checks if whole word was typed correctly
             let correctIndex = 0;
             while (correctIndex < userInput.length && correctIndex < currentWord.length && userInput[correctIndex] === currentWord[correctIndex]) {
                 correctIndex++;
@@ -215,6 +225,7 @@
 
             currentLetterIndex = correctIndex;
 
+            // If current word is typed correctly, move on to the next one
             if (userInput === currentWord) {
                 currentWordIndex++;
                 currentLetterIndex = 0;
@@ -264,6 +275,7 @@
 
             modal.style.display = "block";
 
+            // Fetch score
             fetch('/games/fastTyping', {
             method: 'POST',
             headers: {
