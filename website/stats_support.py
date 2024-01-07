@@ -1,4 +1,4 @@
-from website.models import Statistics, User
+from website.models import Statistics, Activities
 from flask_login import current_user
 from . import db
 
@@ -54,12 +54,14 @@ def make_stats_for(game_id):
 
 def make_stats():
     all_stats = [
-        {"name": "Reaction Time", "value": make_stats_for(game_id=1)},
-        {"name": "Sequence Memory", "value": make_stats_for(game_id=2)},
-        {"name": "Word Generation", "value": make_stats_for(game_id=Statistics.word_generation.value)},
-        {"name": "Matching Colors", "value": make_stats_for(game_id=4)},
-        {"name": "placeholder1", "value": make_stats_for(game_id=5)},
-        {"name": "placeholder2", "value": make_stats_for(game_id=6)}
+        {"name": "Reaction Time", "value": make_stats_for(game_id=Activities.reaction_time.name)},
+        {"name": "Sequence Memory", "value": make_stats_for(game_id=Activities.sequence_memory.name)},
+        {"name": "Word Generation", "value": make_stats_for(game_id=Activities.word_generation.name)},
+        {"name": "Matching Colors", "value": make_stats_for(game_id=Activities.matching_colors.name)},
+        {"name": "Patter Memory", "value": make_stats_for(game_id=Activities.pattern_memory.name)},
+        {"name": "Quick Calculus", "value": make_stats_for(game_id=Activities.quick_calculus.name)},
+        {"name": "Aim Training", "value": make_stats_for(game_id=Activities.aim_training.name)},
+        {"name": "Writing Test", "value": make_stats_for(game_id=Activities.fast_typing.name)}
     ]
     return all_stats
 
