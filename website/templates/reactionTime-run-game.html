@@ -133,6 +133,7 @@
         let tooEarly = true;
         let clicked = false;
 
+        // Display the red flash and wait for click
         function showRedFlash() {
             const redFlash = document.getElementById('redFlash');
             redFlash.style.display = 'block';
@@ -146,6 +147,7 @@
                 redFlash.style.display = 'none';
                 redFlash.removeEventListener('click', handleFlashClick);
 
+                // End game after 5 seconds of no reaction
                 endTime = new Date();
                 if (!clicked) {
                     insertPopUp();
@@ -162,6 +164,7 @@
         }
 
         function insertPopUp() {
+            // If the red flash wasn't clicked for 5 seconds, score is 0
             if (!clicked) {
                 let modal = document.getElementById('tooLateModal');
                 let modalContent = document.querySelector('.modal-content');
@@ -173,6 +176,7 @@
                 let reactionTime = document.getElementById('reactionTime');
                 let finalScore = document.getElementById('finalScore');
 
+                // Calculate score with exp func
                 const timeDiff = (endTime - startTime) / 1000;
                 reactionTime.textContent = timeDiff.toFixed(3);
                 const score = Math.max(0, Math.floor(5001 * Math.pow(0.9983, timeDiff * 1000) - 1));
@@ -180,6 +184,7 @@
 
                 modal.style.display = "block";
 
+                // Fetch score
                 fetch('/games/reactionTime', {
                 method: 'POST',
                 headers: {
@@ -217,6 +222,8 @@
 
         window.onload = startGame;
 
+        // Besides allowing clicks, enables the player to achieve the same effect
+        // by pressing the Enter key
         document.addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {
                 clearInterval(timerInterval);
