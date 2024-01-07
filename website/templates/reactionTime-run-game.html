@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #redFlashScreen {
+            width: 60vw;
+            height: 60vh;
+            background-color: #fff;
+            border: 2px solid #000;
+            position: relative;
+        }
+
+        #redFlash {
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            position: absolute;
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3 ease-in-out;
+            background-color: lightskyblue;
+        }
+
+        .modal-content {
+            background-color: rgb(99, 149, 243);
+            align-items: center;
+            margin: 15% auto;
+            padding: 2vw;
+            border: 1px solid rgb(0, 0, 0);
+            width: 50%;
+            color: rgb(255, 255, 255);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: x-large;
+        }
+
+        .modal button {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 3vw;
+            padding: 1vw 2vw;
+            font-size: 1.5vw;
+            margin-top: 1vw;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #357a37;
+        }
+
+        #giveup {
+            position: absolute;
+            bottom: 10vw;
+            background-color: rgb(183, 90, 56);
+            color: white;
+            font-weight: bold;
+            border: grey;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4">Wait for the Red Flash!</h1>
+
+        <div id="redFlashScreen" onclick="handleFlashClick()">
+            <div id="redFlash"></div>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <p>Reaction Time: <span id="reactionTime"></span> seconds</p>
+            <p>Score: <span id="finalScore"></span></p>
+            <button onclick="retryGame()">Retry</button>
+            <button onclick="returnToMainMenu()">Return to main menu</button>
+        </div>
+    </div>
+
+    <div id="tooEarlyModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <p>Too early!</p>
+            <p>Score: 0</p>
+            <button onclick="retryGame()">Retry</button>
+            <button onclick="returnToMainMenu()">Return to main menu</button>
+        </div>
+    </div>
+
+    <div id="tooLateModal" class="modal">
+        <div class="modal-content">
+            <p>Game Over</p>
+            <p>You are too slow!</p>
+            <p>Reaction Time: ∞</p>
+            <p>Score: 0</p>
+            <button onclick="retryGame()">Retry</button>
+            <button onclick="returnToMainMenu()">Return to main menu</button>
+        </div>
+    </div>
+
+    <script>
+        const gameDuration = 60 * 1000; // 60 seconds in milliseconds
+        let startTime;
+        let endTime;
+        let timerInterval;
+        let tooEarly = true;
+        let clicked = false;
+
+        function showRedFlash() {
+            const redFlash = document.getElementById('redFlash');
+            redFlash.style.display = 'block';
+
+            tooEarly = false;
+            redFlash.addEventListener('click', handleFlashClick);
+
+            startTime = new Date();
+
+            setTimeout(() => {
+                redFlash.style.display = 'none';
+                redFlash.removeEventListener('click', handleFlashClick);
+
+                endTime = new Date();
+                if (!clicked) {
+                    insertPopUp();
+                }
+            }, 5000);
+        }
+
+        function handleFlashClick() {
+            // End the game if the red flash is clicked too early
+            endTime = new Date();
+            clicked = true;
+            clearInterval(timerInterval);
+            insertPopUp();
+        }
+
+        function insertPopUp() {
+            if (!clicked) {
+                let modal = document.getElementById('tooLateModal');
+                let modalContent = document.querySelector('.modal-content');
+                modal.style.display = "block";
+
+            } else if (tooEarly == false) {
+                let modal = document.getElementById('gameOverModal');
+                let modalContent = document.querySelector('.modal-content');
+                let reactionTime = document.getElementById('reactionTime');
+                let finalScore = document.getElementById('finalScore');
+
+                const timeDiff = (endTime - startTime) / 1000;
+                reactionTime.textContent = timeDiff.toFixed(3);
+                const score = Math.max(0, Math.floor(5001 * Math.pow(0.9983, timeDiff * 1000) - 1));
+                finalScore.textContent = score;
+
+                modal.style.display = "block";
+            } else {
+                let modal = document.getElementById('tooEarlyModal');
+                let modalContent = document.querySelector('.modal-content');
+
+                modal.style.display = "block";
+            }
+        }
+
+        function retryGame() {
+            window.location.href = "/games/reactionTimeRunGame";
+        }
+
+        function returnToMainMenu() {
+            window.location.href = "/games";
+        }
+
+        function startGame() {
+            const randomTimeout = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+            setTimeout(showRedFlash, randomTimeout);
+        }
+
+        window.onload = startGame;
+
+        document.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                clearInterval(timerInterval);
+                endTime = new Date();
+                clicked = true;
+                insertPopUp();
+            }
+        });
+    </script>
+</body>
+
+</html>
+{% endblock %}

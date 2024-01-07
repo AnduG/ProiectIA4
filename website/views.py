@@ -25,7 +25,15 @@ def games():
 # Game 1 - reaction time
 @views.route('/games/reactionTime', methods=['GET','POST'])
 def reactionTime():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.reaction_time.name, score)
     return render_template("reactionTime-startscreen.html")
+
+@views.route('/games/reactionTimeRunGame', methods=['GET','POST'])
+def reactionSession():
+    return render_template("reactionTime-run-game.html")
 
 # Game 2 - sequence memory
 @views.route('/games/sequenceMemory', methods=['GET','POST'])
