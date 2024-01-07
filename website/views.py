@@ -30,6 +30,10 @@ def reactionTime():
 # Game 2 - sequence memory
 @views.route('/games/sequenceMemory', methods=['GET','POST'])
 def sequenceMemory():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.sequence_memory.name, score)
     return render_template("sequence-startscreen.html")
 
 @views.route('/games/sequenceMemoryRunGame', methods=['GET','POST'])
@@ -48,6 +52,10 @@ def wordGeneration():
 # Game 4 - matching colors
 @views.route('/games/matchingColors', methods=['GET','POST'])
 def matchingColors():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.matching_colors.name, score)
     return render_template('matchingColors-startscreen.html')
 
 @views.route('/games/matchingColorsRunGame', methods=['GET','POST'])
@@ -57,6 +65,10 @@ def displayGrid():
 # Game 5 - pattern memory
 @views.route('/games/patternMemory')
 def patternMemory():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.pattern_memory.name, score)
     return render_template("pattern-startscreen.html")
 
 @views.route('/games/patternMemoryRunGame')
@@ -66,6 +78,10 @@ def displayPattern():
 # Game 6 - quick calculus
 @views.route('/games/calculus')
 def calculus():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.quick_calculus.name, score)
     return render_template('calculus-startscreen')
 
 @views.route('/games/calculusRunGame')
@@ -75,6 +91,10 @@ def calculusExecution():
 # Game 7 - aim training
 @views.route('/games/aimTraining')
 def aimTraining():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.aim_training.name, score)
     return render_template("aimTraining-startscreen.html")
 
 @views.route('/games/aimTrainingRunGame')
@@ -84,6 +104,10 @@ def aimSession():
 # Game 8
 @views.route('/games/fastTyping')
 def fastTyping():
+    if request.method == 'POST':
+        data = request.get_json()
+        score = data.get('score')
+        upload_stats(Activities.fast_typing.name, score)
     return render_template("fastTyping-startscreen.html")
 
 @views.route('/games/fastTypingRunGame')
