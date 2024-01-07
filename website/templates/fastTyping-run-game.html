@@ -263,6 +263,21 @@
             finalScore.textContent = score;
 
             modal.style.display = "block";
+
+            fetch('/games/fastTyping', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ score: score }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
 
         function retryGame() {

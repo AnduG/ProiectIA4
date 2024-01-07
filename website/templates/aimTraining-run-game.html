@@ -140,7 +140,20 @@
                         scoreDisplay.textContent = score;
                         document.getElementById('gameOverModal').style.display = 'block';
 
-                        // this is where the final score value is, which should be registered in the database
+                        fetch('/games/aimTraining', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ score: score }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                         return;
                     }
                 }, 1000); // Updates every second

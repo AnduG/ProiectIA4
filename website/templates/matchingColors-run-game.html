@@ -239,6 +239,22 @@
                             <h3>Time remaining: 0:00</h3>
                         `;
                         modal.style.display = 'block';
+
+                        fetch('/games/matchingColors', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ score: timeRemaining}),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+
                         document.getElementById('gameOverModal').style.display = 'block'; // Display game over modal
 
                         // Remaining time is guaranteed to be 0 here. Therefore, value 0 should be registered into the databse
@@ -258,6 +274,20 @@
 
             // Displays modal for giving up
             function displayModalGiveUp() {
+                fetch('/games/matchingColors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ score: 0 }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
                 document.getElementById('gameOverModalGiveUp').style.display = 'block';
                 clearInterval(intervalId);
             }
@@ -291,6 +321,20 @@
                 `;
                 modal.style.display = 'block';
 
+                fetch('/games/matchingColors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ score: timeRemaining }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
                 // this is where the remaining time should be registered into the database
             }
         </script>
