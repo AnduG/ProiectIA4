@@ -158,10 +158,23 @@
 
     function playAgain() {
         // Resets the statistics in case the user wants to play again
+        fetch('/games/wordGeneration', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+                 },
+        body: JSON.stringify({ score: score }),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log(data);
+        window.location.href = '/games/wordGeneration';
+        })
+        .catch(error => console.error('Error:', error));
+        window.location.href = '/games/wordGeneration';
         score = 0;
         lives = 3;
         mentioned.length = 0;
-        window.location.href = '/games/wordGeneration';
         displayWord();
     }
 
@@ -178,8 +191,8 @@
         .then(data => {
         console.log(data);
         window.location.href = '/games';
-    })
-    .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
         window.location.href = '/games';
     }
 
