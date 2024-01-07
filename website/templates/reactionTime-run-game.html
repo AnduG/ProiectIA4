@@ -179,6 +179,21 @@
                 finalScore.textContent = score;
 
                 modal.style.display = "block";
+
+                fetch('/games/reactionTime', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ score: score }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             } else {
                 let modal = document.getElementById('tooEarlyModal');
                 let modalContent = document.querySelector('.modal-content');
