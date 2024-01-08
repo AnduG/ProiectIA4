@@ -142,7 +142,6 @@
 
             setTimeout(() => {
                 redFlash.style.display = 'none';
-                redFlash.removeEventListener('click', handleFlashClick);
 
                 // End game after 5 seconds of no reaction
                 endTime = new Date();
@@ -163,11 +162,15 @@
         function insertPopUp() {
             // If the red flash wasn't clicked for 5 seconds, score is 0
             if (!clicked) {
+                document.getElementById('redFlash').removeEventListener('click', handleFlashClick);
+                document.removeEventListener('keypress', handleKeyPress);
                 let modal = document.getElementById('tooLateModal');
                 let modalContent = document.querySelector('.modal-content');
                 modal.style.display = "block";
 
             } else if (tooEarly == false) {
+                document.getElementById('redFlash').removeEventListener('click', handleFlashClick);
+                document.removeEventListener('keypress', handleKeyPress);
                 let modal = document.getElementById('gameOverModal');
                 let modalContent = document.querySelector('.modal-content');
                 let reactionTime = document.getElementById('reactionTime');
@@ -219,16 +222,18 @@
 
         window.onload = startGame;
 
-        // Besides allowing clicks, enables the player to achieve the same effect
-        // by pressing the Enter key
-        document.addEventListener('keypress', function (event) {
+        function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 clearInterval(timerInterval);
                 endTime = new Date();
                 clicked = true;
                 insertPopUp();
             }
-        });
+        }   
+
+        // Besides allowing clicks, enables the player to achieve the same effect
+        // by pressing the Enter key
+        document.addEventListener('keypress', handleKeyPress);
     </script>
 </body>
 
