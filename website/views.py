@@ -90,7 +90,7 @@ def calculus():
         data = request.get_json()
         score = data.get('score')
         upload_stats(Activities.quick_calculus.name, score)
-    return render_template('calculus-startscreen')
+    return render_template('calculus-startscreen.html')
 
 @views.route('/games/calculusRunGame')
 def calculusExecution():
