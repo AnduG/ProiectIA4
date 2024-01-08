@@ -148,8 +148,19 @@
             wordElement.textContent = words[random];
             wordElement.style.animation = 'fadeInOut 0.5s forwards'; // animation
         } else {
-            // THIS IS WHERE "score" CONTAINS THE FINAL "score"
-            // WHICH SHOULD BE REGISTERED IN THE DATABASE
+            fetch('/games/wordGeneration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                    },
+            body: JSON.stringify({ score: score }),
+            })
+            .then(response => response.json())
+            .then(data => {
+            console.log(data);
+            window.location.href = '/games/wordGeneration';
+            })
+            .catch(error => console.error('Error:', error));
             var scoreDisplay = document.getElementById("scoreDisplay");
             scoreDisplay.textContent = score;
             document.getElementById('gameOverModal').style.display = 'block';
@@ -158,19 +169,6 @@
 
     function playAgain() {
         // Resets the statistics in case the user wants to play again
-        fetch('/games/wordGeneration', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-                 },
-        body: JSON.stringify({ score: score }),
-        })
-        .then(response => response.json())
-        .then(data => {
-        console.log(data);
-        window.location.href = '/games/wordGeneration';
-        })
-        .catch(error => console.error('Error:', error));
         window.location.href = '/games/wordGeneration';
         score = 0;
         lives = 3;
@@ -180,19 +178,6 @@
 
     function returnToMainPage() {
         // Redirect to game page
-        fetch('/games/wordGeneration', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-                 },
-        body: JSON.stringify({ score: score }),
-        })
-        .then(response => response.json())
-        .then(data => {
-        console.log(data);
-        window.location.href = '/games';
-        })
-        .catch(error => console.error('Error:', error));
         window.location.href = '/games';
     }
 
