@@ -58,7 +58,7 @@ def make_stats():
         {"name": "Sequence Memory", "value": make_stats_for(game_id=Activities.sequence_memory.name)},
         {"name": "Word Generation", "value": make_stats_for(game_id=Activities.word_generation.name)},
         {"name": "Matching Colors", "value": make_stats_for(game_id=Activities.matching_colors.name)},
-        {"name": "Patter Memory", "value": make_stats_for(game_id=Activities.pattern_memory.name)},
+        {"name": "Pattern Memory", "value": make_stats_for(game_id=Activities.pattern_memory.name)},
         {"name": "Quick Calculus", "value": make_stats_for(game_id=Activities.quick_calculus.name)},
         {"name": "Aim Training", "value": make_stats_for(game_id=Activities.aim_training.name)},
         {"name": "Writing Test", "value": make_stats_for(game_id=Activities.fast_typing.name)}
