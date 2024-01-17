@@ -612,17 +612,16 @@
             addListeners(current_modal);
         }
 
-        function playAgain() {
-            window.location.href = '/games/patternMemoryRunGame';
-        }
-
-        function returnToMainPage() {
-            window.location.href = '/games';
-        }
-
         //  EXECUTION STARTS HERE
-        
         startRound();
     };
+
+    function playAgain() {
+        window.location.href = '/games/patternMemoryRunGame';
+    }
+
+    function returnToMainPage() {
+        window.location.href = '/games';
+    }
 </script>
 {% endblock %}

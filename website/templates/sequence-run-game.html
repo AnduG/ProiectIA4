@@ -242,18 +242,18 @@
             addListeners();
         }
 
-        // Redirect to the same page
-        function playAgain() {
-            window.location.href = '/games/sequenceMemoryRunGame';
-        }
-
-        // Redirect to game page
-        function returnToMainPage() {
-            window.location.href = '/games';
-        }
-
         //  EXECUTION STARTS HERE
         startRound();
     };
+
+    // Redirect to the same page
+    function playAgain() {
+        window.location.href = '/games/sequenceMemoryRunGame';
+    }
+
+    // Redirect to game page
+    function returnToMainPage() {
+        window.location.href = '/games';
+    }
 </script>
 {% endblock %}
