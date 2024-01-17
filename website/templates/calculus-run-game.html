@@ -277,6 +277,14 @@
             }, 1000);
         }
         
+        function playAgain() {
+            window.location.href = '/games/calculusRunGame';
+        }
+
+        function returnToMainPage() {
+            window.location.href = '/games';
+        }
+        
         //  EXECUTION STARTS HERE
 
         //  Don't allow character input
@@ -312,13 +320,6 @@
 
         startTimer();
         startRound();
-    }
-    function playAgain() {
-        window.location.href = '/games/calculusRunGame';
-    }
-
-    function returnToMainPage() {
-        window.location.href = '/games';
     }
 </script>
 {% endblock %}
